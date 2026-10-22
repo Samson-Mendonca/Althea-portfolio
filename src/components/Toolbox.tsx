@@ -39,7 +39,7 @@ export default function Toolbox() {
                   +
                 </span>
               </summary>
-              <p className="pb-6 pl-12 opacity-70 md:pl-[4.5rem] md:text-lg">{c.body}</p>
+              <p className="pb-6 pl-12 text-lg opacity-70 md:pl-[4.5rem] md:text-xl">{c.body}</p>
             </details>
           ))}
         </div>

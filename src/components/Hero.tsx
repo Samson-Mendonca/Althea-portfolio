@@ -49,15 +49,16 @@ export default function Hero() {
         style={{ y, scale }}
         className="mx-auto flex min-h-[calc(100svh-1.25rem)] max-w-[1600px] flex-col justify-between px-4 pt-24 md:px-10 md:pt-28"
       >
-        <div className="flex items-start justify-between gap-6">
+        {/* items-end: credentials sit on the portrait's baseline, directly above the name */}
+        <div className="flex items-end justify-between gap-6">
           <motion.div
-            className="max-w-xs pt-2 md:max-w-sm"
+            className="max-w-md md:max-w-3xl"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE_OUT, delay: t + 0.3 }}
           >
-            <p className="text-xs uppercase tracking-[0.25em] opacity-70 md:text-sm">{site.role}</p>
-            <p className="mt-4 hidden text-sm uppercase tracking-wide md:block">Based in {site.location}</p>
+            <p className="text-base font-medium uppercase leading-snug tracking-[0.12em] md:text-2xl">{site.role}</p>
+            <p className="mt-1 text-sm uppercase tracking-[0.12em] opacity-70 md:text-lg">Based in {site.location}</p>
           </motion.div>
 
           {/* Portrait, top right — wipes up into view */}
@@ -85,12 +86,12 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Name on ONE line. Antonio Bold measures ≈7.05em for "ALTHEA ▢ CARVALHO",
-            so font-size = (viewport − card gaps − padding − scrollbar) ÷ 7.2, capped on wide screens. */}
+        {/* Name on ONE line. Antonio Bold measures ≈6.1em for "ALTHEA CARVALHO",
+            so font-size = (viewport − card gaps − padding − scrollbar) ÷ 6.3, capped on wide screens. */}
         <h1
           onPointerMove={onPointerMove}
           onPointerLeave={onPointerLeave}
-          className="my-8 font-display font-bold text-[min(calc((100vw_-_4rem)/7.2),13rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_7rem)/7.2),13rem)]"
+          className="mb-8 mt-1 font-display font-bold text-[min(calc((100vw_-_4rem)/6.3),15rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_7rem)/6.3),15rem)]"
         >
           <motion.span
             className="block whitespace-nowrap will-change-transform"
@@ -98,22 +99,13 @@ export default function Hero() {
           >
             <span className="block overflow-hidden pb-[0.04em]">
               <motion.span
-                className="flex items-center gap-[0.12em]"
+                className="flex items-center gap-[0.22em]"
                 initial={{ y: "105%" }}
                 animate={{ y: "0%" }}
                 transition={{ duration: 1, ease: EASE_OUT, delay: t }}
               >
-                {site.name.first}
-                {/* Ochi's signature image chip that wipes open inside the headline */}
-                <motion.span
-                  aria-hidden
-                  className="inline-block h-[0.66em] w-[0.9em] shrink-0 rounded-[0.08em]"
-                  style={{ background: texture }}
-                  initial={{ clipPath: "inset(0 100% 0 0 round 0.08em)" }}
-                  animate={{ clipPath: "inset(0 0% 0 0 round 0.08em)" }}
-                  transition={{ duration: 1, ease: EASE_IN_OUT, delay: t + 0.5 }}
-                />
-                {site.name.last}
+                <span>{site.name.first}</span>
+                <span>{site.name.last}</span>
               </motion.span>
             </span>
           </motion.span>
@@ -125,7 +117,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE_OUT, delay: t + 0.45 }}
         >
-          <p className="max-w-xl text-base md:text-lg">{site.tagline}</p>
+          <p className="max-w-3xl text-lg leading-snug md:text-xl xl:text-2xl">{site.tagline}</p>
           <div className="flex flex-wrap gap-3">
             <PillLink href="#portfolio" variant="lime">See my work</PillLink>
             <PillLink href="#inquiry" variant="outline">

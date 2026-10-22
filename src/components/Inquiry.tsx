@@ -57,7 +57,7 @@ export default function Inquiry() {
       <div className="mx-auto grid max-w-[1600px] gap-12 lg:grid-cols-[1fr_1.2fr]">
         <div>
           <SectionTitle kicker="Start a project" title="Let’s talk" />
-          <p className="mt-6 max-w-md text-lg">{site.inquiry.intro}</p>
+          <p className="mt-6 max-w-lg text-xl leading-snug md:text-2xl">{site.inquiry.intro}</p>
           <ul className="mt-8 space-y-3 opacity-70">
             <li>✦ What you need — content, ads, email, or all of it</li>
             <li>✦ Where you want to go — reach, sales, or a launch</li>

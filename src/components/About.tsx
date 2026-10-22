@@ -37,7 +37,7 @@ export default function About() {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
             transition={{ staggerChildren: 0.12 }}
-            className="space-y-5 text-lg leading-relaxed"
+            className="space-y-5 text-xl leading-relaxed md:text-2xl"
           >
             <motion.p variants={fadeUp} transition={{ duration: 0.8, ease: EASE_OUT }} className="text-sm uppercase tracking-widest text-ink/60">
               What I bring
@@ -69,7 +69,7 @@ export default function About() {
             </ul>
             <div className="mt-8 flex items-center gap-6 rounded-2xl bg-ink p-6 md:p-8">
               <span className="font-display text-6xl font-bold leading-none text-lime md:text-8xl">8x+</span>
-              <span className="text-sm leading-snug text-paper/80 md:text-base">
+              <span className="text-base leading-snug text-paper/80 md:text-lg">
                 ROAS delivered across full-funnel paid campaigns
               </span>
             </div>

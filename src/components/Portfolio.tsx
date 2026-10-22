@@ -147,7 +147,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
         </span>
       </motion.button>
 
-      <p className="mt-4 max-w-md opacity-70">{service.blurb}</p>
+      <p className="mt-4 max-w-md text-lg opacity-80">{service.blurb}</p>
       <ul className="mt-3 flex flex-wrap gap-2">
         {service.tags.map((t) => (
           <li key={t} className="rounded-full border border-paper/30 px-3 py-1 text-xs uppercase tracking-wide">
@@ -167,7 +167,7 @@ export default function Portfolio() {
       <div className="mx-auto max-w-[1600px]">
         <div className="border-b border-paper/20 pb-6">
           <SectionTitle kicker="Selected work" title="Portfolio" />
-          <p className="mt-4 max-w-md opacity-70">
+          <p className="mt-4 max-w-lg text-lg opacity-80 md:text-xl">
             A selection of work for brands across fashion & lifestyle. Tap a service to watch examples.
           </p>
         </div>
