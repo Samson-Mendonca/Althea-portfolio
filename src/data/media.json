@@ -1,0 +1,196 @@
+{
+  "email": [
+    {
+      "type": "image",
+      "src": "/portfolio/email/01.webp",
+      "width": 1080,
+      "height": 1350
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/02.webp",
+      "width": 1600,
+      "height": 500
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/03.webp",
+      "width": 1320,
+      "height": 1624
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/04.webp",
+      "width": 1320,
+      "height": 1632
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/05.webp",
+      "width": 1320,
+      "height": 1626
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/06.webp",
+      "width": 1320,
+      "height": 1634
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/07.webp",
+      "width": 1320,
+      "height": 1304
+    },
+    {
+      "type": "image",
+      "src": "/portfolio/email/08.webp",
+      "width": 1080,
+      "height": 1350
+    }
+  ],
+  "organic": [
+    {
+      "type": "video",
+      "src": "/portfolio/organic/01.mp4",
+      "poster": "/portfolio/organic/01-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/02.mp4",
+      "poster": "/portfolio/organic/02-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/03.mp4",
+      "poster": "/portfolio/organic/03-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/04.mp4",
+      "poster": "/portfolio/organic/04-poster.webp",
+      "width": 718,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/05.mp4",
+      "poster": "/portfolio/organic/05-poster.webp",
+      "width": 718,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/06.mp4",
+      "poster": "/portfolio/organic/06-poster.webp",
+      "width": 718,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/07.mp4",
+      "poster": "/portfolio/organic/07-poster.webp",
+      "width": 718,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/08.mp4",
+      "poster": "/portfolio/organic/08-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/09.mp4",
+      "poster": "/portfolio/organic/09-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/organic/10.mp4",
+      "poster": "/portfolio/organic/10-poster.webp",
+      "width": 720,
+      "height": 1280
+    }
+  ],
+  "paid": [
+    {
+      "type": "video",
+      "src": "/portfolio/paid/01.mp4",
+      "poster": "/portfolio/paid/01-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/02.mp4",
+      "poster": "/portfolio/paid/02-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/03.mp4",
+      "poster": "/portfolio/paid/03-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/04.mp4",
+      "poster": "/portfolio/paid/04-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/05.mp4",
+      "poster": "/portfolio/paid/05-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/06.mp4",
+      "poster": "/portfolio/paid/06-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/07.mp4",
+      "poster": "/portfolio/paid/07-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/08.mp4",
+      "poster": "/portfolio/paid/08-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/09.mp4",
+      "poster": "/portfolio/paid/09-poster.webp",
+      "width": 720,
+      "height": 1280
+    },
+    {
+      "type": "video",
+      "src": "/portfolio/paid/10.mp4",
+      "poster": "/portfolio/paid/10-poster.webp",
+      "width": 720,
+      "height": 1280
+    }
+  ]
+}

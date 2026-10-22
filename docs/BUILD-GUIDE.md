@@ -540,3 +540,31 @@ snap.addElements([...document.querySelectorAll("[data-snap]")], { align: ["start
 ### e) Fonts
 
 Ochi's fonts (Founders Grotesk and PP Neue Montreal) need paid licences. Antonio and Hanken Grotesk are free and close. When fonts change, re-measure anything sized by font metrics: the one-line hero name went from a 7.4em to a 7.05em divisor. If Althea buys the real fonts, load them with `next/font/local` and point `--font-display` / `--font-sans` at them. Nothing else changes.
+
+---
+
+## Step 23: Real portfolio media, and how to add more
+
+### How it's wired
+- **Raw files** live *outside* the repo in `../althea-media-raw/<category>/` (organic, paid, email, event). The originals came to about 1.4 GB. They never go into git.
+- **`npm run media`** ([scripts/process-media.mjs](../scripts/process-media.mjs)) compresses everything with ffmpeg:
+  - Videos become 720p H.264 MP4 with `faststart`, so they start playing while still downloading.
+  - Each video gets a WebP still frame as its thumbnail.
+  - Images become WebP at most 1600px wide.
+  
+  Output goes to `public/portfolio/<category>/`, and the script writes **`src/data/media.json`**. The original 1.4 GB came out at about 85 MB.
+- **`site.ts`** reads `media.json` (`mediaFor("organic")`). The Portfolio section hides any category with no media, then derives everything else from the list: the cover (first photo, or first video's still), the "10 videos / 8 photos" label, and the gallery. **The data shapes the UI, so no component code changes when content changes.**
+
+### Adding or replacing content (the easy way)
+1. Put the new files in the right folder, e.g. `althea-media-raw/event/`. The folder name must match a portfolio `id` in `site.ts`.
+2. Run `npm run media`. It only processes new files; existing outputs are skipped.
+3. Run `npm run dev` and check the Portfolio section. The Event Marketing card appears automatically once it has media.
+4. Commit `public/portfolio` and `src/data/media.json`.
+
+To **replace** a file, delete its numbered output in `public/portfolio/<category>/` and re-run. Files are numbered in name order, so renaming the raw files (`01-…`, `02-…`) controls the order on the site.
+
+### Practices used
+- **Never ship camera originals.** Compress for the web and keep the master copies elsewhere.
+- **`preload="none"` on gallery videos** means nothing downloads until the visitor presses play. The `poster` image shows meanwhile.
+- **Width and height come from the files** (via `ffprobe`) and are passed to `<Image>` and `<video>`, so the page doesn't jump around as media loads.
+- **CSS columns give a masonry layout** for mixed portrait and landscape items, with no JS library.
