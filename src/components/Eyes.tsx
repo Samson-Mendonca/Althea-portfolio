@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "motion/react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 
 function Eye({ rotate }: { rotate: MotionValue<string> }) {
   return (
@@ -24,6 +24,11 @@ export default function Eyes() {
   const smooth = useSpring(angle, { stiffness: 120, damping: 18 });
   const rotate = useTransform(smooth, (a) => `rotate(${a}deg)`);
 
+  // Parallax: the headline travels slower than the page while the section passes.
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const headlineY = useTransform(scrollYProgress, [0, 1], ["-30%", "30%"]);
+
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
       const box = ref.current?.getBoundingClientRect();
@@ -42,20 +47,21 @@ export default function Eyes() {
   }, [angle]);
 
   return (
-    <section aria-label="Stop the scroll" className="relative grid min-h-[70svh] place-items-center overflow-hidden bg-cream px-4 py-20 md:min-h-svh">
-      <p
+    <section ref={sectionRef} aria-label="Stop the scroll" className="relative -mt-6 grid min-h-[70svh] place-items-center overflow-hidden rounded-t-3xl bg-forest px-4 py-20 md:min-h-svh">
+      <motion.p
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[clamp(4.5rem,19vw,20rem)] uppercase leading-[0.82] text-accent/90"
+        style={{ y: headlineY }}
+        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[clamp(4.5rem,19vw,20rem)] uppercase leading-[0.82] text-lime"
       >
         Stop the
         <br />
         scroll
-      </p>
+      </motion.p>
       <div ref={ref} className="relative flex gap-3 md:gap-8">
         <Eye rotate={rotate} />
         <Eye rotate={rotate} />
       </div>
-      <p className="absolute bottom-8 left-1/2 w-max max-w-[90vw] -translate-x-1/2 text-center text-sm uppercase tracking-[0.2em] text-ink/70">
+      <p className="absolute bottom-8 left-1/2 w-max max-w-[90vw] -translate-x-1/2 text-center text-sm uppercase tracking-[0.2em] text-paper/70">
         Content people can’t look away from
       </p>
     </section>

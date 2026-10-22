@@ -4,32 +4,28 @@ import { useEffect } from "react";
 import Lenis from "lenis";
 import { MotionConfig } from "motion/react";
 
-// Client-only wrapper: smooth scrolling + global reduced-motion policy.
+// Client-only wrapper: Lenis smooth scrolling + global Motion settings.
+// Decision: full motion for everyone, even when the OS asks for reduced motion
+// (matches the Ochi reference). To respect the OS setting instead, switch
+// reducedMotion to "user" and skip Lenis when matchMedia reports "reduce".
 export default function Providers({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let lenis: Lenis | null = null;
+    // autoRaf: Lenis runs its own requestAnimationFrame loop.
+    // anchors: clicks on href="#section" links glide instead of jumping.
+    const lenis = new Lenis({ autoRaf: true, anchors: true, lerp: 0.08 });
 
-    // Lenis takes over scrolling, so it must be off for reduced-motion users.
-    const sync = () => {
-      if (mq.matches) {
-        lenis?.destroy();
-        lenis = null;
-      } else if (!lenis) {
-        lenis = new Lenis({ autoRaf: true, anchors: true });
-      }
-    };
+    // Locked while the preloader plays; Preloader fires "intro:done" when finished.
+    // (Child effects run before parent effects, so an event is safer than a shared ref.)
+    window.scrollTo(0, 0);
+    lenis.stop();
+    const start = () => lenis.start();
+    window.addEventListener("intro:done", start, { once: true });
 
-    sync();
-    mq.addEventListener("change", sync);
     return () => {
-      mq.removeEventListener("change", sync);
-      lenis?.destroy();
+      window.removeEventListener("intro:done", start);
+      lenis.destroy();
     };
   }, []);
 
-  // reducedMotion="user": Motion drops transform animations, keeps opacity fades.
-  // Only works for shorthand props (y, scale, scaleX), not raw `transform` strings,
-  // which is why every component animates with shorthands.
-  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+  return <MotionConfig reducedMotion="never">{children}</MotionConfig>;
 }

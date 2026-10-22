@@ -37,7 +37,7 @@ export function Reveal({
 export function SectionTitle({ kicker, title, light = false }: { kicker: string; title: string; light?: boolean }) {
   return (
     <h2 className={`relative ${light ? "text-paper" : "text-ink"}`}>
-      <span className="font-script text-accent block text-[clamp(2rem,4vw,3.5rem)] leading-none -mb-[0.3em] relative z-10">
+      <span className={`font-script ${light ? "text-lime" : "text-forest"} block text-[clamp(2rem,4vw,3.5rem)] leading-none -mb-[0.3em] relative z-10`}>
         {kicker}
       </span>
       <Reveal>
@@ -66,12 +66,12 @@ export function PillLink({
 }: {
   href: string;
   children: string;
-  variant?: "dark" | "light" | "accent";
+  variant?: "dark" | "light" | "forest";
 }) {
   const [styles, dot] = {
     dark: ["bg-ink text-paper", "bg-ink"],
     light: ["border border-ink text-ink", "bg-paper"],
-    accent: ["bg-accent text-paper", "bg-accent"],
+    forest: ["bg-forest text-paper", "bg-forest"],
   }[variant];
   return (
     <a

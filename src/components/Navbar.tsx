@@ -29,7 +29,7 @@ export default function Navbar() {
       >
         <nav className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 md:h-20 md:px-10">
           <a href="#top" className="flex items-baseline gap-1.5" onClick={() => setOpen(false)}>
-            <span className="font-script text-2xl text-accent">{site.name.first}</span>
+            <span className="font-script text-2xl text-forest">{site.name.first}</span>
             <span className="font-display text-sm tracking-wide">{site.name.last.toUpperCase()}</span>
           </a>
 
@@ -45,7 +45,7 @@ export default function Navbar() {
 
           <a
             href="#inquiry"
-            className="hidden rounded-full bg-accent px-5 py-2.5 text-xs uppercase tracking-wider text-paper lg:inline-block"
+            className="hidden rounded-full bg-forest px-5 py-2.5 text-xs uppercase tracking-wider text-paper lg:inline-block"
           >
             <Roll text="Let’s work together" />
           </a>
@@ -72,7 +72,7 @@ export default function Navbar() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-40 flex flex-col justify-end bg-cream px-4 pb-10 pt-24 lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-end bg-mist px-4 pb-10 pt-24 lg:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}

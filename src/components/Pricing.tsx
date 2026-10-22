@@ -8,7 +8,7 @@ const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="bg-cream px-4 py-20 md:px-10 md:py-32">
+    <section id="pricing" className="relative -mt-6 rounded-t-3xl bg-mist px-4 py-20 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionTitle kicker="the" title="Pricing" />
 
@@ -31,7 +31,7 @@ export default function Pricing() {
             >
               <span
                 className={`w-max rounded-full px-3 py-1 text-xs uppercase tracking-wider ${
-                  p.featured ? "bg-accent text-paper" : "border border-ink/30"
+                  p.featured ? "bg-lime text-ink" : "border border-ink/30"
                 }`}
               >
                 {p.featured ? "Most popular" : "Package"}
@@ -44,13 +44,13 @@ export default function Pricing() {
               <ul className={`mt-8 flex-1 divide-y ${p.featured ? "divide-paper/15" : "divide-ink/10"}`}>
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-3 py-3">
-                    <span className="text-accent">✦</span>
+                    <span className={p.featured ? "text-lime" : "text-forest"}>✦</span>
                     {f}
                   </li>
                 ))}
               </ul>
               <div className="mt-8">
-                <PillLink href="#inquiry" variant={p.featured ? "accent" : "dark"}>
+                <PillLink href="#inquiry" variant={p.featured ? "forest" : "dark"}>
                   Start with this
                 </PillLink>
               </div>

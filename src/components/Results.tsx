@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, motion, useInView, useReducedMotion } from "motion/react";
+import { animate, motion, useInView } from "motion/react";
 import { site } from "@/data/site";
 import { SectionTitle } from "./ui";
 
@@ -11,12 +11,11 @@ const maxRoas = Math.max(...site.roas.map((r) => r.value));
 function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
-  const reduce = useReducedMotion();
   const final = value.toFixed(decimals);
 
   // Count up once the number scrolls into view; writes to the DOM, not state.
   useEffect(() => {
-    if (!inView || reduce) return;
+    if (!inView) return;
     const controls = animate(0, value, {
       duration: 1.8,
       ease: EASE_OUT,
@@ -25,11 +24,11 @@ function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
       },
     });
     return () => controls.stop();
-  }, [inView, reduce, value, decimals]);
+  }, [inView, value, decimals]);
 
   return (
     <div className="border-t border-paper/25 pt-4">
-      <p className="font-display text-[clamp(3.5rem,8vw,7.5rem)] leading-none text-accent-soft">
+      <p className="font-display text-[clamp(3.5rem,8vw,7.5rem)] leading-none text-lime">
         {/* Server renders the final value, so no-JS and screen readers see the real number */}
         <span ref={ref}>{final}</span>
         {suffix}
@@ -41,7 +40,7 @@ function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
 
 export default function Results() {
   return (
-    <section id="results" className="rounded-t-3xl bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
+    <section id="results" className="relative -mt-6 rounded-t-3xl bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionTitle kicker="proof in" title="Results" light />
 
@@ -61,7 +60,7 @@ export default function Results() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, ease: EASE_OUT, delay: (i % 2) * 0.1 }}
             >
-              <h3 className="text-xs uppercase tracking-[0.2em] text-accent-soft">{m.title}</h3>
+              <h3 className="text-xs uppercase tracking-[0.2em] text-lime">{m.title}</h3>
               <dl className="mt-4 divide-y divide-paper/15">
                 {m.rows.map(([k, v]) => (
                   <div key={k} className="flex items-baseline justify-between gap-4 py-3">
@@ -75,7 +74,7 @@ export default function Results() {
         </div>
 
         <div className="mt-20">
-          <h3 className="text-xs uppercase tracking-[0.2em] text-accent-soft">Return on ad spend — by campaign</h3>
+          <h3 className="text-xs uppercase tracking-[0.2em] text-lime">Return on ad spend — by campaign</h3>
           <ul className="mt-6 space-y-5">
             {site.roas.map((r, i) => (
               <li key={r.campaign} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 md:grid-cols-[16rem_1fr_5rem]">
@@ -90,7 +89,7 @@ export default function Results() {
                 >
                   {/* scaleX from the left edge: GPU-friendly "width" animation */}
                   <motion.span
-                    className="block h-full origin-left rounded-full bg-accent"
+                    className="block h-full origin-left rounded-full bg-lime"
                     variants={{
                       hidden: { scaleX: 0 },
                       show: { scaleX: r.value / maxRoas },

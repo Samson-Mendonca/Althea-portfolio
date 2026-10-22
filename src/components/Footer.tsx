@@ -3,9 +3,9 @@ import { Reveal, Roll } from "./ui";
 
 export default function Footer() {
   return (
-    <footer id="contact" className="rounded-t-3xl bg-ink px-4 pt-20 text-paper md:px-10 md:pt-32">
+    <footer id="contact" className="sticky bottom-0 z-0 bg-ink px-4 pt-20 text-paper md:px-10 md:pt-32">
       <div className="mx-auto max-w-[1600px]">
-        <p className="font-script text-4xl text-accent-soft md:text-5xl">let’s create</p>
+        <p className="font-script text-4xl text-lime md:text-5xl">let’s create</p>
         <h2 className="font-display text-[clamp(4rem,13vw,13rem)] uppercase leading-[0.86]">
           <Reveal>Let’s work</Reveal>
           <Reveal delay={0.1}>together!</Reveal>

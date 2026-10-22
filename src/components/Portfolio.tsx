@@ -10,10 +10,10 @@ type Service = (typeof site.portfolio)[number];
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 const gradients = [
-  "radial-gradient(circle at 20% 30%, #f2c9a8, transparent 45%), linear-gradient(135deg, #c4451c, #6e2410)",
-  "radial-gradient(circle at 80% 20%, #c4451c, transparent 45%), linear-gradient(135deg, #212121, #4a3a33)",
-  "radial-gradient(circle at 70% 75%, #c4451c, transparent 40%), linear-gradient(135deg, #f6eee2, #f2c9a8)",
-  "radial-gradient(circle at 30% 70%, #f6eee2, transparent 40%), linear-gradient(135deg, #8f2f12, #212121)",
+  "radial-gradient(circle at 20% 30%, #cdea68, transparent 45%), linear-gradient(135deg, #004d43, #002a25)",
+  "radial-gradient(circle at 80% 20%, #4b4b4b, transparent 50%), linear-gradient(135deg, #212121, #3c3c3c)",
+  "radial-gradient(circle at 70% 75%, #004d43, transparent 45%), linear-gradient(135deg, #cdea68, #9fbf3b)",
+  "radial-gradient(circle at 30% 70%, #cdea68, transparent 40%), linear-gradient(135deg, #e7e7e7, #bdbdbd)",
 ];
 
 function youtubeEmbed(url: string) {
@@ -128,7 +128,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
           aria-hidden
           className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden px-4"
         >
-          <span className="flex flex-wrap justify-center font-display text-[clamp(3rem,7vw,7rem)] uppercase leading-none text-paper">
+          <span className={`flex flex-wrap justify-center font-display text-[clamp(3rem,7vw,7rem)] uppercase leading-none ${index % 4 < 2 ? "text-lime" : "text-forest"}`}>
             {[...service.name].map((ch, i) => (
               <span key={i} className="overflow-hidden">
                 <motion.span
@@ -163,7 +163,7 @@ export default function Portfolio() {
   const [active, setActive] = useState<Service | null>(null);
 
   return (
-    <section id="portfolio" className="px-4 py-20 md:px-10 md:py-32">
+    <section id="portfolio" className="relative -mt-6 rounded-t-3xl bg-paper px-4 py-20 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <div className="border-b border-ink/20 pb-6">
           <SectionTitle kicker="the" title="Portfolio" />

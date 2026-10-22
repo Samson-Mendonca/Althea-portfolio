@@ -18,7 +18,8 @@ export default function Home() {
     <>
       <Preloader />
       <Navbar />
-      <main>
+      {/* main sits above the sticky footer (z-10) and lifts off it at the end of the page */}
+      <main className="relative z-10 rounded-b-3xl bg-paper">
         <Hero />
         <Marquee />
         <About />

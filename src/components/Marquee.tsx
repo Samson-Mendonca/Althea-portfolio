@@ -5,7 +5,6 @@ import {
   motion,
   useAnimationFrame,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useTransform,
   useVelocity,
@@ -20,14 +19,12 @@ const wrap = (min: number, max: number, v: number) => {
 // Ochi's "WE ARE OCHI" band: drifts left, flips direction when you scroll up,
 // and speeds up with scroll velocity.
 export default function Marquee() {
-  const reduce = useReducedMotion();
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
   const direction = useRef(-1);
 
   useAnimationFrame((_, delta) => {
-    if (reduce) return;
     const v = velocity.get();
     if (v < 0) direction.current = 1;
     else if (v > 0) direction.current = -1;
@@ -40,7 +37,7 @@ export default function Marquee() {
   const words = site.marquee.flatMap((w) => [w, "•"]);
 
   return (
-    <section aria-label="Services" className="overflow-hidden rounded-t-3xl bg-accent py-8 text-paper md:py-14">
+    <section aria-label="Services" className="relative z-10 -mt-[1px] overflow-hidden rounded-t-3xl border-b border-paper/20 bg-forest py-8 text-paper md:py-14">
       <motion.div className="flex w-max whitespace-nowrap" style={{ transform }} aria-hidden>
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center">
