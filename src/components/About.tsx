@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { site } from "@/data/site";
-import { PillLink } from "./ui";
+import { PillLink, Section } from "./ui";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
@@ -13,9 +13,12 @@ const fadeUp = {
 
 export default function About() {
   return (
-    <section id="about" className="relative z-10 -mt-6 rounded-t-3xl bg-lime px-4 pb-20 text-ink md:px-10 md:pb-28">
-      <div className="mx-auto max-w-[1600px] border-t border-ink/20 pt-10 md:pt-16">
-        <p className="font-script text-4xl leading-none md:text-5xl">about</p>
+    <Section id="about" className="bg-lime px-4 py-20 text-ink md:px-10 md:py-28">
+      <div className="mx-auto max-w-[1600px]">
+        <p className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-ink/70">
+          <span className="size-2 rounded-full bg-ink" />
+          About me
+        </p>
         <motion.p
           className="mt-4 max-w-[22ch] text-[clamp(1.9rem,4.2vw,4rem)] leading-[1.08] md:max-w-[28ch]"
           variants={fadeUp}
@@ -57,7 +60,7 @@ export default function About() {
               {site.about.services.map((s, i) => (
                 <li
                   key={s}
-                  className="flex items-baseline justify-between border-b border-ink/20 py-4 font-display text-3xl uppercase md:text-5xl"
+                  className="flex items-baseline justify-between border-b border-ink/20 py-4 font-display text-3xl font-semibold uppercase md:text-5xl"
                 >
                   <span>{s}</span>
                   <span className="font-sans text-sm text-ink/60">0{i + 1}</span>
@@ -65,7 +68,7 @@ export default function About() {
               ))}
             </ul>
             <div className="mt-8 flex items-center gap-6 rounded-2xl bg-ink p-6 md:p-8">
-              <span className="font-display text-6xl leading-none text-lime md:text-8xl">8x+</span>
+              <span className="font-display text-6xl font-bold leading-none text-lime md:text-8xl">8x+</span>
               <span className="text-sm leading-snug text-paper/80 md:text-base">
                 ROAS delivered across full-funnel paid campaigns
               </span>
@@ -73,6 +76,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

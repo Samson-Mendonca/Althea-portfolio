@@ -8,19 +8,23 @@
   --color-mist: #e7e7e7;
   --color-forest: #004d43;
   --color-lime: #cdea68;
-  --color-muted: #6b6b6b;
+  --color-void: #0c0c0c; /* page background, visible in the gaps between section cards */
 
-  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
-  --font-sans: var(--font-jost), "Century Gothic", sans-serif;
-  --font-script: var(--font-pinyon), cursive;
+  --font-display: var(--font-antonio), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-hanken), "Helvetica Neue", sans-serif;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 html {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-void);
+  color: var(--color-paper);
+}
+
+/* Intro already played this session → never show the preloader again. */
+html[data-intro-seen] .preloader {
+  display: none;
 }
 
 body {

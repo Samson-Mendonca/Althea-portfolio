@@ -1,9 +1,40 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useScroll, useTransform } from "motion/react";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+
+// Every page section is a rounded card with a small gap around it (the dark page
+// background shows through). As a card scrolls in it grows from 94% to full size,
+// and `data-snap` registers it with the Lenis snap in Providers.
+export function Section({
+  id,
+  label,
+  className = "",
+  children,
+}: {
+  id?: string;
+  label?: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.55"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
+  return (
+    <motion.section
+      ref={ref}
+      id={id}
+      aria-label={label}
+      data-snap
+      style={{ scale }}
+      className={`relative mx-2.5 mt-2.5 origin-top overflow-hidden rounded-[1.75rem] ${className}`}
+    >
+      {children}
+    </motion.section>
+  );
+}
 
 // Ochi's signature entrance: text rises out of an invisible mask.
 export function Reveal({
@@ -33,15 +64,17 @@ export function Reveal({
   );
 }
 
-// Small script word + huge display title, e.g. "proof in / RESULTS".
-export function SectionTitle({ kicker, title, light = false }: { kicker: string; title: string; light?: boolean }) {
+// Ochi-style heading: small dotted label above a huge condensed title.
+// Colours come from the section (currentColor), so it works on any background.
+export function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
   return (
-    <h2 className={`relative ${light ? "text-paper" : "text-ink"}`}>
-      <span className={`font-script ${light ? "text-lime" : "text-forest"} block text-[clamp(2rem,4vw,3.5rem)] leading-none -mb-[0.3em] relative z-10`}>
+    <h2>
+      <span className="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] opacity-70">
+        <span className="size-2 rounded-full bg-current" />
         {kicker}
       </span>
       <Reveal>
-        <span className="font-display uppercase text-[clamp(3.5rem,11vw,10rem)] leading-[0.9] tracking-tight">
+        <span className="font-display text-[clamp(3.5rem,11vw,10rem)] font-semibold uppercase leading-[0.9] tracking-tight">
           {title}
         </span>
       </Reveal>
@@ -58,7 +91,7 @@ export function Roll({ text }: { text: string }) {
   );
 }
 
-// Ochi-style pill button with the arrow dot that grows on hover.
+// Ochi-style pill button with the dot that grows on hover.
 export function PillLink({
   href,
   children,
@@ -66,17 +99,17 @@ export function PillLink({
 }: {
   href: string;
   children: string;
-  variant?: "dark" | "light" | "forest";
+  variant?: "dark" | "lime" | "outline";
 }) {
   const [styles, dot] = {
     dark: ["bg-ink text-paper", "bg-ink"],
-    light: ["border border-ink text-ink", "bg-paper"],
-    forest: ["bg-forest text-paper", "bg-forest"],
+    lime: ["bg-lime text-ink", "bg-lime"],
+    outline: ["border border-current", "bg-lime"],
   }[variant];
   return (
     <a
       href={href}
-      className={`group inline-flex items-center gap-4 rounded-full pl-6 pr-2 py-2 text-sm uppercase tracking-wide ${styles}`}
+      className={`group inline-flex items-center gap-4 rounded-full py-2 pl-6 pr-2 text-sm uppercase tracking-wide ${styles}`}
     >
       <Roll text={children} />
       <span className="grid size-8 place-items-center rounded-full bg-current">

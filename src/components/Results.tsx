@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { animate, motion, useInView } from "motion/react";
 import { site } from "@/data/site";
-import { SectionTitle } from "./ui";
+import { Section, SectionTitle } from "./ui";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 const maxRoas = Math.max(...site.roas.map((r) => r.value));
@@ -28,7 +28,7 @@ function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
 
   return (
     <div className="border-t border-paper/25 pt-4">
-      <p className="font-display text-[clamp(3.5rem,8vw,7.5rem)] leading-none text-lime">
+      <p className="font-display text-[clamp(3.5rem,8vw,7.5rem)] font-bold leading-none text-lime">
         {/* Server renders the final value, so no-JS and screen readers see the real number */}
         <span ref={ref}>{final}</span>
         {suffix}
@@ -40,9 +40,9 @@ function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
 
 export default function Results() {
   return (
-    <section id="results" className="relative -mt-6 rounded-t-3xl bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
+    <Section id="results" className="bg-forest px-4 py-20 text-paper md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
-        <SectionTitle kicker="proof in" title="Results" light />
+        <SectionTitle kicker="Proof in numbers" title="Results" />
 
         <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
           {site.stats.map((s) => (
@@ -54,7 +54,7 @@ export default function Results() {
           {site.metrics.map((m, i) => (
             <motion.div
               key={m.title}
-              className="rounded-2xl bg-paper/[0.06] p-6 md:p-8"
+              className="rounded-2xl bg-ink/30 p-6 md:p-8"
               initial={{ opacity: 0, y: "30px" }}
               whileInView={{ opacity: 1, y: "0px" }}
               viewport={{ once: true, amount: 0.3 }}
@@ -103,6 +103,6 @@ export default function Results() {
           </ul>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

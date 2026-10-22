@@ -21,16 +21,15 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-          scrolled && !open ? "bg-paper/80 backdrop-blur-md" : ""
+        className={`fixed inset-x-2.5 top-2.5 z-50 rounded-2xl transition-colors duration-300 ${open ? "text-ink" : "text-paper"} ${
+          scrolled && !open ? "bg-ink/75 backdrop-blur-md" : ""
         }`}
-        animate={{ y: hidden && !open ? "-100%" : "0%" }}
+        animate={{ y: hidden && !open ? "-130%" : "0%" }}
         transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
       >
         <nav className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 md:h-20 md:px-10">
-          <a href="#top" className="flex items-baseline gap-1.5" onClick={() => setOpen(false)}>
-            <span className="font-script text-2xl text-forest">{site.name.first}</span>
-            <span className="font-display text-sm tracking-wide">{site.name.last.toUpperCase()}</span>
+          <a href="#top" className="font-display text-xl font-semibold uppercase tracking-wide" onClick={() => setOpen(false)}>
+            {site.name.first} <span className="text-lime">{site.name.last}</span>
           </a>
 
           <ul className="hidden items-center gap-8 text-[15px] lg:flex">
@@ -45,7 +44,7 @@ export default function Navbar() {
 
           <a
             href="#inquiry"
-            className="hidden rounded-full bg-forest px-5 py-2.5 text-xs uppercase tracking-wider text-paper lg:inline-block"
+            className="hidden rounded-full bg-lime px-5 py-2.5 text-xs uppercase tracking-wider text-ink lg:inline-block"
           >
             <Roll text="Let’s work together" />
           </a>
@@ -72,7 +71,7 @@ export default function Navbar() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-40 flex flex-col justify-end bg-mist px-4 pb-10 pt-24 lg:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-end bg-lime px-4 pb-10 pt-24 text-ink lg:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
@@ -84,7 +83,7 @@ export default function Navbar() {
                   <motion.a
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="block py-2 font-display text-5xl uppercase"
+                    className="block py-2 font-display text-5xl font-semibold uppercase"
                     initial={{ y: "100%" }}
                     animate={{ y: "0%" }}
                     transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1], delay: 0.15 + i * 0.05 }}

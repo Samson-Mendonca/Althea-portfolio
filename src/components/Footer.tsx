@@ -1,31 +1,35 @@
 import { site } from "@/data/site";
-import { Reveal, Roll } from "./ui";
+import { Reveal, Roll, Section } from "./ui";
 
 export default function Footer() {
   return (
-    <footer id="contact" className="sticky bottom-0 z-0 bg-ink px-4 pt-20 text-paper md:px-10 md:pt-32">
+    <Section id="contact" className="mb-2.5 bg-lime px-4 pt-20 text-ink md:px-10 md:pt-32">
+      <footer>
       <div className="mx-auto max-w-[1600px]">
-        <p className="font-script text-4xl text-lime md:text-5xl">let’s create</p>
-        <h2 className="font-display text-[clamp(4rem,13vw,13rem)] uppercase leading-[0.86]">
+        <p className="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-ink/70">
+          <span className="size-2 rounded-full bg-ink" />
+          Let’s create
+        </p>
+        <h2 className="font-display text-[clamp(4rem,13vw,13rem)] font-bold uppercase leading-[0.86]">
           <Reveal>Let’s work</Reveal>
           <Reveal delay={0.1}>together!</Reveal>
         </h2>
 
-        <div className="mt-16 grid gap-10 border-t border-paper/20 pt-10 md:grid-cols-3">
+        <div className="mt-16 grid gap-10 border-t border-ink/20 pt-10 md:grid-cols-[2fr_1fr_1fr]">
           <div>
-            <p className="text-xs uppercase tracking-widest text-paper/50">Email</p>
-            <a href={`mailto:${site.email}`} className="mt-2 block break-all text-xl md:text-2xl">
+            <p className="text-xs uppercase tracking-widest text-ink/60">Email</p>
+            <a href={`mailto:${site.email}`} className="mt-2 block text-lg sm:text-xl lg:text-2xl">
               <Roll text={site.email} />
             </a>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-widest text-paper/50">Phone</p>
+            <p className="text-xs uppercase tracking-widest text-ink/60">Phone</p>
             <a href={site.phone.href} className="mt-2 block text-xl md:text-2xl">
               <Roll text={site.phone.display} />
             </a>
           </div>
           <nav aria-label="Footer">
-            <p className="text-xs uppercase tracking-widest text-paper/50">Menu</p>
+            <p className="text-xs uppercase tracking-widest text-ink/60">Menu</p>
             <ul className="mt-2 grid grid-cols-2 gap-1">
               {site.nav.map((n) => (
                 <li key={n.href}>
@@ -41,14 +45,15 @@ export default function Footer() {
         {/* Giant name, sized to the viewport width so it always fits on one line */}
         <p
           aria-hidden
-          className="mt-20 select-none whitespace-nowrap text-center font-display text-[13.5vw] uppercase leading-[0.8] text-paper/10 md:mt-28"
+          className="mt-20 select-none whitespace-nowrap text-center font-display text-[13.5vw] font-bold uppercase leading-[0.8] text-ink/10 md:mt-28"
         >
           {site.name.first} {site.name.last}
         </p>
-        <p className="py-6 text-center text-xs uppercase tracking-widest text-paper/50">
+        <p className="py-6 text-center text-xs uppercase tracking-widest text-ink/60">
           © {site.name.first} {site.name.last} · {site.location}
         </p>
       </div>
-    </footer>
+      </footer>
+    </Section>
   );
 }

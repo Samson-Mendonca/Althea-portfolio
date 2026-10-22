@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Anton, Jost, Pinyon_Script } from "next/font/google";
+import { Antonio, Hanken_Grotesk } from "next/font/google";
 import Providers from "@/components/Providers";
 import "./globals.css";
 
-const anton = Anton({ variable: "--font-anton", weight: "400", subsets: ["latin"] });
-const jost = Jost({ variable: "--font-jost", subsets: ["latin"] });
-const pinyon = Pinyon_Script({ variable: "--font-pinyon", weight: "400", subsets: ["latin"] });
+// Ochi uses Founders Grotesk X-Condensed + PP Neue Montreal (both paid licences).
+// Closest free equivalents: Antonio (condensed display) + Hanken Grotesk (body).
+const antonio = Antonio({ variable: "--font-antonio", weight: ["600", "700"], subsets: ["latin"] });
+const hanken = Hanken_Grotesk({ variable: "--font-hanken", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://altheacarvalhomarketing.com"),
@@ -21,9 +22,17 @@ export const metadata: Metadata = {
   },
 };
 
+// Runs before first paint: if the intro already played this session, flag <html>
+// so CSS hides the preloader immediately (no flash on reloads).
+const introScript = `try{if(sessionStorage.getItem("intro-seen"))document.documentElement.dataset.introSeen=""}catch(e){}`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${anton.variable} ${jost.variable} ${pinyon.variable} antialiased`}>
+    // suppressHydrationWarning: introScript may add data-intro-seen before React hydrates
+    <html lang="en" className={`${antonio.variable} ${hanken.variable} antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+      </head>
       <body>
         <Providers>{children}</Providers>
       </body>

@@ -2,28 +2,49 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate, AnimatePresence, motion, useMotionValue, useTransform } from "motion/react";
-import { site } from "@/data/site";
 
 const COUNT_SECONDS = 1.8;
 const GROW_SECONDS = 0.9;
-// Total intro length, so the hero can start its reveal as the card fills the screen.
-export const INTRO_SECONDS = COUNT_SECONDS + GROW_SECONDS;
+const INTRO_SECONDS = COUNT_SECONDS + GROW_SECONDS;
 
-// Ochi's loader: a grey card inside a dark frame brightens to white while the
-// counter runs, then grows to fill the screen — becoming the page itself.
+// The intro plays once per browser session. layout.tsx's inline script sets
+// <html data-intro-seen> before first paint on later loads, and CSS hides us.
+export function introSeen() {
+  return typeof document !== "undefined" && "introSeen" in document.documentElement.dataset;
+}
+
+// When the hero should start revealing: as the card finishes growing, or right away.
+export function heroDelay() {
+  return introSeen() ? 0.15 : INTRO_SECONDS - 0.35;
+}
+
+// Hero card geometry (Section: 0.625rem gap, 1.75rem radius) — the loader card ends
+// exactly there, so it hands over to the hero without a visible jump.
+const GAP = 10;
+const RADIUS = 28;
+
+// Ochi's loader: a grey card inside a dark frame changes colour while the counter
+// runs, then grows to become the hero card.
 export default function Preloader() {
   const [done, setDone] = useState(false);
   const countRef = useRef<HTMLSpanElement>(null);
 
-  // One motion value drives everything: 0→1 = counting, 1→2 = card grows to fullscreen.
+  // One motion value drives everything: 0→1 = counting, 1→2 = card grows into the hero.
   const p = useMotionValue(0);
-  const top = useTransform(p, [0, 1, 2], ["34%", "12%", "0%"]);
-  const side = useTransform(p, [0, 1, 2], ["26%", "7%", "0%"]);
-  const radius = useTransform(p, [0, 1.6, 2], [16, 16, 0]);
-  const background = useTransform(p, [0, 1], ["#6b6b6b", "#f1f1f1"]);
-  const contentOpacity = useTransform(p, [1.2, 1.7], [1, 0]);
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  const top = useTransform(p, (v) =>
+    v <= 1 ? `${lerp(34, 12, v)}%` : `calc(${lerp(12, 0, v - 1)}% + ${lerp(0, GAP, v - 1)}px)`,
+  );
+  const side = useTransform(p, (v) =>
+    v <= 1 ? `${lerp(24, 7, v)}%` : `calc(${lerp(7, 0, v - 1)}% + ${lerp(0, GAP, v - 1)}px)`,
+  );
+  const bottom = useTransform(p, [1, 2], [0, GAP]);
+  const radius = useTransform(p, [0, 1, 2], [16, 16, RADIUS]);
+  const background = useTransform(p, [0, 1], ["#4b4b4b", "#004d43"]);
+  const contentOpacity = useTransform(p, [1.15, 1.6], [1, 0]);
 
   useEffect(() => {
+    if (introSeen()) return; // already played this session
     let cancelled = false;
     const count = animate(p, 1, {
       duration: COUNT_SECONDS,
@@ -37,6 +58,10 @@ export default function Preloader() {
       if (cancelled) return;
       animate(p, 2, { duration: GROW_SECONDS, ease: [0.77, 0, 0.175, 1] }).then(() => {
         if (cancelled) return;
+        try {
+          sessionStorage.setItem("intro-seen", "1");
+        } catch {}
+        document.documentElement.dataset.introSeen = "";
         window.dispatchEvent(new Event("intro:done")); // tells Providers to unlock scrolling
         setDone(true);
       });
@@ -52,29 +77,28 @@ export default function Preloader() {
       {!done && (
         <motion.div
           aria-hidden
-          className="fixed inset-0 z-[100] bg-ink"
+          className="preloader fixed inset-0 z-[100] bg-void"
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.35 }}
         >
           <motion.div
-            className="absolute bottom-0 overflow-hidden text-ink"
-            style={{ top, left: side, right: side, borderTopLeftRadius: radius, borderTopRightRadius: radius, background }}
+            className="absolute overflow-hidden text-paper"
+            style={{ top, left: side, right: side, bottom, borderRadius: radius, background }}
           >
             <motion.div className="flex h-full flex-col justify-between p-5 md:p-8" style={{ opacity: contentOpacity }}>
-              <p className="flex items-baseline gap-1.5">
-                <span className="font-script text-2xl text-forest">{site.name.first}</span>
-                <span className="font-display text-sm tracking-wide">{site.name.last.toUpperCase()}</span>
-              </p>
-              <p className="font-display text-[clamp(2.5rem,7vw,6.5rem)] uppercase leading-[0.9]">
-                Social media
+              <p className="font-display text-lg font-semibold uppercase tracking-wide">Althea Carvalho</p>
+              <p className="font-display text-[clamp(2.5rem,7vw,6.5rem)] font-semibold uppercase leading-[0.92]">
+                Elevate your
                 <br />
-                that stops
+                brand’s socials
                 <br />
-                the scroll
+                <span className="text-lime">& marketing</span>
               </p>
-              <div className="flex items-end justify-between">
-                <span className="text-xs uppercase tracking-widest">Loading</span>
-                <span className="font-display text-[clamp(3.5rem,9vw,8rem)] leading-none">
+              <div className="flex items-end justify-between gap-6">
+                <span className="max-w-[16rem] text-sm leading-snug opacity-80">
+                  Contact me to elevate your brand’s socials and marketing experience.
+                </span>
+                <span className="font-display text-[clamp(3.5rem,9vw,8rem)] font-semibold leading-none">
                   <span ref={countRef}>00</span>%
                 </span>
               </div>

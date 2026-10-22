@@ -10,6 +10,7 @@ import {
   useVelocity,
 } from "motion/react";
 import { site } from "@/data/site";
+import { Section } from "./ui";
 
 const wrap = (min: number, max: number, v: number) => {
   const range = max - min;
@@ -37,14 +38,14 @@ export default function Marquee() {
   const words = site.marquee.flatMap((w) => [w, "•"]);
 
   return (
-    <section aria-label="Services" className="relative z-10 -mt-[1px] overflow-hidden rounded-t-3xl border-b border-paper/20 bg-forest py-8 text-paper md:py-14">
+    <Section label="Services" className="bg-ink py-8 text-lime md:py-14">
       <motion.div className="flex w-max whitespace-nowrap" style={{ transform }} aria-hidden>
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center">
             {words.map((w, i) => (
               <span
                 key={i}
-                className="px-[0.18em] font-display text-[clamp(5rem,16vw,15rem)] uppercase leading-[0.85] tracking-tight"
+                className="px-[0.18em] font-display text-[clamp(5rem,16vw,15rem)] font-semibold uppercase leading-[0.85] tracking-tight"
               >
                 {w}
               </span>
@@ -53,6 +54,6 @@ export default function Marquee() {
         ))}
       </motion.div>
       <p className="sr-only">{site.marquee.join(", ")}</p>
-    </section>
+    </Section>
   );
 }

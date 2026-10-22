@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { site, type Video } from "@/data/site";
-import { SectionTitle } from "./ui";
+import { Section, SectionTitle } from "./ui";
 
 type Service = (typeof site.portfolio)[number];
 
@@ -11,9 +11,9 @@ const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 const gradients = [
   "radial-gradient(circle at 20% 30%, #cdea68, transparent 45%), linear-gradient(135deg, #004d43, #002a25)",
-  "radial-gradient(circle at 80% 20%, #4b4b4b, transparent 50%), linear-gradient(135deg, #212121, #3c3c3c)",
+  "radial-gradient(circle at 80% 20%, #cdea68, transparent 40%), linear-gradient(135deg, #00382f, #004d43)",
   "radial-gradient(circle at 70% 75%, #004d43, transparent 45%), linear-gradient(135deg, #cdea68, #9fbf3b)",
-  "radial-gradient(circle at 30% 70%, #cdea68, transparent 40%), linear-gradient(135deg, #e7e7e7, #bdbdbd)",
+  "radial-gradient(circle at 30% 70%, #004d43, transparent 50%), linear-gradient(135deg, #3c3c3c, #2a2a2a)",
 ];
 
 function youtubeEmbed(url: string) {
@@ -25,18 +25,18 @@ function VideoTile({ video }: { video: Video }) {
   const embed = video.kind === "youtube" && video.url ? youtubeEmbed(video.url) : null;
   return (
     <figure>
-      <div className="aspect-[9/16] max-h-[60vh] w-full overflow-hidden rounded-xl bg-ink/10">
+      <div className="aspect-[9/16] max-h-[60vh] w-full overflow-hidden rounded-xl bg-paper/10">
         {embed ? (
           <iframe src={embed} title={video.title} className="size-full" allow="encrypted-media; picture-in-picture" allowFullScreen />
         ) : video.url ? (
           <video src={video.url} controls playsInline preload="metadata" className="size-full object-cover" />
         ) : (
-          <div className="grid size-full place-items-center p-6 text-center text-sm uppercase tracking-widest text-muted">
+          <div className="grid size-full place-items-center p-6 text-center text-sm uppercase tracking-widest opacity-70">
             Video coming soon
           </div>
         )}
       </div>
-      <figcaption className="mt-2 text-sm text-muted">{video.title}</figcaption>
+      <figcaption className="mt-2 text-sm opacity-70">{video.title}</figcaption>
     </figure>
   );
 }
@@ -52,7 +52,7 @@ function VideoModal({ service, onClose }: { service: Service | null; onClose: ()
   return (
     <dialog
       ref={ref}
-      className="modal m-auto w-[min(56rem,calc(100vw-2rem))] max-h-[90svh] overflow-y-auto rounded-2xl bg-paper p-0 text-ink"
+      className="modal m-auto w-[min(56rem,calc(100vw-2rem))] max-h-[90svh] overflow-y-auto rounded-2xl bg-ink p-0 text-paper"
       aria-labelledby="video-modal-title"
       data-lenis-prevent
       onClose={() => {
@@ -65,18 +65,18 @@ function VideoModal({ service, onClose }: { service: Service | null; onClose: ()
       {service && (
         <div className="p-6 md:p-10">
           <div className="flex items-start justify-between gap-4">
-            <h3 id="video-modal-title" className="font-display text-4xl uppercase md:text-6xl">
+            <h3 id="video-modal-title" className="font-display text-4xl font-semibold uppercase md:text-6xl">
               {service.name}
             </h3>
             <button
               type="button"
               onClick={() => ref.current?.close()}
-              className="rounded-full border border-ink px-4 py-2 text-xs uppercase tracking-wider"
+              className="rounded-full border border-paper/60 px-4 py-2 text-xs uppercase tracking-wider"
             >
               Close
             </button>
           </div>
-          <p className="mt-2 max-w-lg text-muted">{service.blurb}</p>
+          <p className="mt-2 max-w-lg opacity-70">{service.blurb}</p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             {service.videos.map((v) => (
               <VideoTile key={v.title} video={v} />
@@ -98,7 +98,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
       transition={{ duration: 0.9, ease: EASE_OUT, delay: (index % 2) * 0.1 }}
     >
       <div className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
-        <span className="size-2.5 rounded-full bg-ink" />
+        <span className="size-2.5 rounded-full bg-lime" />
         {String(index + 1).padStart(2, "0")} — {service.name}
       </div>
 
@@ -128,7 +128,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
           aria-hidden
           className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden px-4"
         >
-          <span className={`flex flex-wrap justify-center font-display text-[clamp(3rem,7vw,7rem)] uppercase leading-none ${index % 4 < 2 ? "text-lime" : "text-forest"}`}>
+          <span className={`flex flex-wrap justify-center font-display text-[clamp(3rem,7vw,7rem)] font-bold uppercase leading-none ${index % 4 === 2 ? "text-forest" : "text-lime"}`}>
             {[...service.name].map((ch, i) => (
               <span key={i} className="overflow-hidden">
                 <motion.span
@@ -147,10 +147,10 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
         </span>
       </motion.button>
 
-      <p className="mt-4 max-w-md text-muted">{service.blurb}</p>
+      <p className="mt-4 max-w-md opacity-70">{service.blurb}</p>
       <ul className="mt-3 flex flex-wrap gap-2">
         {service.tags.map((t) => (
-          <li key={t} className="rounded-full border border-ink/40 px-3 py-1 text-xs uppercase tracking-wide">
+          <li key={t} className="rounded-full border border-paper/30 px-3 py-1 text-xs uppercase tracking-wide">
             {t}
           </li>
         ))}
@@ -163,11 +163,11 @@ export default function Portfolio() {
   const [active, setActive] = useState<Service | null>(null);
 
   return (
-    <section id="portfolio" className="relative -mt-6 rounded-t-3xl bg-paper px-4 py-20 md:px-10 md:py-32">
+    <Section id="portfolio" className="bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
-        <div className="border-b border-ink/20 pb-6">
-          <SectionTitle kicker="the" title="Portfolio" />
-          <p className="mt-4 max-w-md text-muted">
+        <div className="border-b border-paper/20 pb-6">
+          <SectionTitle kicker="Selected work" title="Portfolio" />
+          <p className="mt-4 max-w-md opacity-70">
             A selection of work for brands across fashion & lifestyle. Tap a service to watch examples.
           </p>
         </div>
@@ -178,6 +178,6 @@ export default function Portfolio() {
         </div>
       </div>
       <VideoModal service={active} onClose={() => setActive(null)} />
-    </section>
+    </Section>
   );
 }

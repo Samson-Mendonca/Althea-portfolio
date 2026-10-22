@@ -2,15 +2,15 @@
 
 import { motion } from "motion/react";
 import { site } from "@/data/site";
-import { PillLink, SectionTitle } from "./ui";
+import { PillLink, Section, SectionTitle } from "./ui";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative -mt-6 rounded-t-3xl bg-mist px-4 py-20 md:px-10 md:py-32">
+    <Section id="pricing" className="bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
-        <SectionTitle kicker="the" title="Pricing" />
+        <SectionTitle kicker="Packages" title="Pricing" />
 
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
           {site.pricing.map((p, i) => (
@@ -26,31 +26,31 @@ export default function Pricing() {
             >
             <article
               className={`relative flex w-full flex-col rounded-3xl p-8 transition-transform duration-500 ease-(--ease-out) hover:-translate-y-2 md:p-10 ${
-                p.featured ? "bg-ink text-paper" : "bg-paper"
+                p.featured ? "bg-lime text-ink" : "bg-paper/[0.06]"
               }`}
             >
               <span
                 className={`w-max rounded-full px-3 py-1 text-xs uppercase tracking-wider ${
-                  p.featured ? "bg-lime text-ink" : "border border-ink/30"
+                  p.featured ? "bg-ink text-lime" : "border border-paper/30"
                 }`}
               >
                 {p.featured ? "Most popular" : "Package"}
               </span>
-              <h3 className="mt-6 font-display text-4xl uppercase md:text-5xl">{p.name}</h3>
+              <h3 className="mt-6 font-display text-4xl font-semibold uppercase md:text-5xl">{p.name}</h3>
               <p className="mt-4">
-                <span className="font-display text-6xl">{p.price}</span>
-                <span className={p.featured ? "text-paper/70" : "text-muted"}> / month</span>
+                <span className="font-display text-6xl font-bold">{p.price}</span>
+                <span className={"opacity-70"}> / month</span>
               </p>
-              <ul className={`mt-8 flex-1 divide-y ${p.featured ? "divide-paper/15" : "divide-ink/10"}`}>
+              <ul className={`mt-8 flex-1 divide-y ${p.featured ? "divide-ink/15" : "divide-paper/15"}`}>
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-3 py-3">
-                    <span className={p.featured ? "text-lime" : "text-forest"}>✦</span>
+                    <span className={p.featured ? "text-forest" : "text-lime"}>✦</span>
                     {f}
                   </li>
                 ))}
               </ul>
               <div className="mt-8">
-                <PillLink href="#inquiry" variant={p.featured ? "forest" : "dark"}>
+                <PillLink href="#inquiry" variant={p.featured ? "dark" : "lime"}>
                   Start with this
                 </PillLink>
               </div>
@@ -59,8 +59,8 @@ export default function Pricing() {
           ))}
         </div>
 
-        <p className="mt-8 max-w-2xl text-muted">*{site.pricingNote}</p>
+        <p className="mt-8 max-w-2xl opacity-70">*{site.pricingNote}</p>
       </div>
-    </section>
+    </Section>
   );
 }

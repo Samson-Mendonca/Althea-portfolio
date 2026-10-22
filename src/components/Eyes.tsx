@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Section } from "./ui";
 import { motion, useMotionValue, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
 
 function Eye({ rotate }: { rotate: MotionValue<string> }) {
@@ -25,7 +26,7 @@ export default function Eyes() {
   const rotate = useTransform(smooth, (a) => `rotate(${a}deg)`);
 
   // Parallax: the headline travels slower than the page while the section passes.
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const headlineY = useTransform(scrollYProgress, [0, 1], ["-30%", "30%"]);
 
@@ -47,11 +48,12 @@ export default function Eyes() {
   }, [angle]);
 
   return (
-    <section ref={sectionRef} aria-label="Stop the scroll" className="relative -mt-6 grid min-h-[70svh] place-items-center overflow-hidden rounded-t-3xl bg-forest px-4 py-20 md:min-h-svh">
+    <Section label="Stop the scroll" className="bg-forest">
+    <div ref={sectionRef} className="relative grid min-h-[70svh] place-items-center px-4 py-20 md:min-h-[calc(100svh-1.25rem)]">
       <motion.p
         aria-hidden
         style={{ y: headlineY }}
-        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[clamp(4.5rem,19vw,20rem)] uppercase leading-[0.82] text-lime"
+        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[clamp(4.5rem,19vw,20rem)] font-bold uppercase leading-[0.82] text-lime"
       >
         Stop the
         <br />
@@ -64,6 +66,7 @@ export default function Eyes() {
       <p className="absolute bottom-8 left-1/2 w-max max-w-[90vw] -translate-x-1/2 text-center text-sm uppercase tracking-[0.2em] text-paper/70">
         Content people can’t look away from
       </p>
-    </section>
+    </div>
+    </Section>
   );
 }

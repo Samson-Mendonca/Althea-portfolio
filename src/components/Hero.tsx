@@ -4,8 +4,8 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
 import { site } from "@/data/site";
-import { INTRO_SECONDS } from "./Preloader";
-import { PillLink } from "./ui";
+import { heroDelay } from "./Preloader";
+import { PillLink, Section } from "./ui";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;
@@ -15,8 +15,8 @@ const texture =
   "radial-gradient(circle at 30% 25%, #cdea68 0 14%, transparent 42%), radial-gradient(circle at 75% 75%, #2f7a6d 0 18%, transparent 48%), linear-gradient(160deg, #004d43, #002a25)";
 
 export default function Hero() {
-  const t = INTRO_SECONDS - 0.35; // start revealing as the loader card finishes growing
-  const ref = useRef<HTMLElement>(null);
+  const t = heroDelay(); // after the intro card on first load, almost immediately afterwards
+  const ref = useRef<HTMLDivElement>(null);
 
   // Scroll parallax: the hero drifts down at half speed, so the next section
   // (rounded top, higher z-index) slides up over it — Ochi's overlap effect.
@@ -43,10 +43,11 @@ export default function Hero() {
   }
 
   return (
-    <section ref={ref} id="top" className="relative overflow-hidden">
+    <Section id="top" className="mt-2.5 bg-forest text-paper">
+      <div ref={ref}>
       <motion.div
         style={{ y, scale }}
-        className="mx-auto flex min-h-svh max-w-[1600px] flex-col justify-between px-4 pt-24 md:px-10 md:pt-28"
+        className="mx-auto flex min-h-[calc(100svh-1.25rem)] max-w-[1600px] flex-col justify-between px-4 pt-24 md:px-10 md:pt-28"
       >
         <div className="flex items-start justify-between gap-6">
           <motion.div
@@ -55,7 +56,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE_OUT, delay: t + 0.3 }}
           >
-            <p className="text-xs uppercase tracking-[0.25em] text-muted md:text-sm">{site.role}</p>
+            <p className="text-xs uppercase tracking-[0.25em] opacity-70 md:text-sm">{site.role}</p>
             <p className="mt-4 hidden text-sm uppercase tracking-wide md:block">Based in {site.location}</p>
           </motion.div>
 
@@ -77,19 +78,19 @@ export default function Hero() {
                 className="object-cover"
               />
             ) : (
-              <span className="absolute inset-0 grid place-items-center font-script text-5xl text-lime md:text-8xl">
+              <span className="absolute inset-0 grid place-items-center font-display text-6xl font-semibold text-lime md:text-9xl">
                 AC
               </span>
             )}
           </motion.div>
         </div>
 
-        {/* Name on ONE line. Anton measures ≈7.4em for "ALTHEA ▢ CARVALHO",
-            so font-size = available width ÷ 7.4 (capped on very wide screens). */}
+        {/* Name on ONE line. Antonio Bold measures ≈7.05em for "ALTHEA ▢ CARVALHO",
+            so font-size = (viewport − card gaps − padding − scrollbar) ÷ 7.2, capped on wide screens. */}
         <h1
           onPointerMove={onPointerMove}
           onPointerLeave={onPointerLeave}
-          className="my-8 font-display text-[min(calc((100vw_-_2rem)/7.4),13.5rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_5rem)/7.4),13.5rem)]"
+          className="my-8 font-display font-bold text-[min(calc((100vw_-_4rem)/7.2),13rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_7rem)/7.2),13rem)]"
         >
           <motion.span
             className="block whitespace-nowrap will-change-transform"
@@ -119,20 +120,21 @@ export default function Hero() {
         </h1>
 
         <motion.div
-          className="mb-6 grid gap-6 border-t border-ink/20 pt-5 md:mb-10 md:grid-cols-[1fr_auto] md:items-center"
+          className="mb-6 grid gap-6 border-t border-paper/20 pt-5 md:mb-10 md:grid-cols-[1fr_auto] md:items-center"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE_OUT, delay: t + 0.45 }}
         >
           <p className="max-w-xl text-base md:text-lg">{site.tagline}</p>
           <div className="flex flex-wrap gap-3">
-            <PillLink href="#portfolio">See my work</PillLink>
-            <PillLink href="#inquiry" variant="light">
+            <PillLink href="#portfolio" variant="lime">See my work</PillLink>
+            <PillLink href="#inquiry" variant="outline">
               Get in touch
             </PillLink>
           </div>
         </motion.div>
       </motion.div>
-    </section>
+      </div>
+    </Section>
   );
 }
