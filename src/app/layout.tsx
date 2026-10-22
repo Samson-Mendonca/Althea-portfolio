@@ -22,17 +22,10 @@ export const metadata: Metadata = {
   },
 };
 
-// Runs before first paint: if the intro already played this session, flag <html>
-// so CSS hides the preloader immediately (no flash on reloads).
-const introScript = `try{if(sessionStorage.getItem("intro-seen"))document.documentElement.dataset.introSeen=""}catch(e){}`;
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    // suppressHydrationWarning: introScript may add data-intro-seen before React hydrates
+    // suppressHydrationWarning: Preloader adds data-intro-seen to <html> at runtime
     <html lang="en" className={`${antonio.variable} ${hanken.variable} antialiased`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: introScript }} />
-      </head>
       <body>
         <Providers>{children}</Providers>
       </body>

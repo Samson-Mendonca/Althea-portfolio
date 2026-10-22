@@ -22,7 +22,7 @@ html {
   color: var(--color-paper);
 }
 
-/* Intro already played this session → never show the preloader again. */
+/* Intro already played in this page load → never show it again (e.g. after a dev hot reload). */
 html[data-intro-seen] .preloader {
   display: none;
 }

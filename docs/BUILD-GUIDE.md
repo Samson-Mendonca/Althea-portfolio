@@ -218,21 +218,19 @@ animate(p, 1, { duration: 1.8, onUpdate: v => countRef.current.textContent = ...
 
 Three techniques:
 
-### a) Name on one line: sizing from measurement, not guesswork
+### a) Run the intro once per page load, never on remounts
 
-The Anton font was measured in the browser:
+The first attempt stored "seen" in `sessionStorage`. That hid the intro on **reloads** too, so it felt like it had disappeared. The rule that was actually wanted is "play on a fresh page load, never replay within that page".
 
-```js
-ctx.font = "100px Anton"; ctx.measureText("ALTHEACARVALHO").width  // ≈ 640px → 6.4em
+The fix is a flag on the page itself. When the intro finishes, the Preloader sets `document.documentElement.dataset.introSeen`:
+
+```css
+html[data-intro-seen] .preloader { display: none; }
 ```
 
-Add the image chip (0.9em) and the gaps, and the line is ≈ **7.4em** wide. So:
+A DOM attribute lasts exactly as long as the page. A hot reload or a component remount keeps the same `<html>` element, so the intro doesn't replay. A real reload creates a fresh `<html>` without the flag, so it does replay. `heroDelay()` reads the same flag so the hero doesn't wait 2.4s after a remount.
 
-```
-font-size = min( (100vw − side padding) / 7.4 , 13.5rem )
-```
-
-In Tailwind: `text-[min(calc((100vw_-_5rem)/7.4),13.5rem)]` (underscores stand for spaces in arbitrary values). `whitespace-nowrap` guarantees one line. Then it was checked in the DOM: `scrollWidth === clientWidth`, so nothing overflows.
+Lesson: **choose your storage by lifetime.** A component's state lasts until it unmounts, a module variable until the next hot reload, a DOM flag until the page goes away, `sessionStorage` until the tab closes, and `localStorage` indefinitely.
 
 ### b) 3D hover tilt
 

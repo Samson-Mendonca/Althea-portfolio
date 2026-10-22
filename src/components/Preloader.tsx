@@ -7,8 +7,9 @@ const COUNT_SECONDS = 1.8;
 const GROW_SECONDS = 0.9;
 const INTRO_SECONDS = COUNT_SECONDS + GROW_SECONDS;
 
-// The intro plays once per browser session. layout.tsx's inline script sets
-// <html data-intro-seen> before first paint on later loads, and CSS hides us.
+// The intro plays once per page load. When it finishes it flags <html data-intro-seen>;
+// that flag lives as long as the page, so remounts (hot reload, re-renders) never
+// replay it, while a real reload starts with a fresh <html> and plays it again.
 export function introSeen() {
   return typeof document !== "undefined" && "introSeen" in document.documentElement.dataset;
 }
@@ -58,9 +59,6 @@ export default function Preloader() {
       if (cancelled) return;
       animate(p, 2, { duration: GROW_SECONDS, ease: [0.77, 0, 0.175, 1] }).then(() => {
         if (cancelled) return;
-        try {
-          sessionStorage.setItem("intro-seen", "1");
-        } catch {}
         document.documentElement.dataset.introSeen = "";
         window.dispatchEvent(new Event("intro:done")); // tells Providers to unlock scrolling
         setDone(true);
