@@ -1,26 +1,150 @@
 @import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Design tokens — Ochi structure, Althea's burnt orange as the accent. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: #f1f1f1;
+  --color-ink: #212121;
+  --color-cream: #f6eee2;
+  --color-accent: #c4451c;
+  --color-accent-soft: #f2c9a8;
+  --color-muted: #6b6b6b;
+
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-jost), "Century Gothic", sans-serif;
+  --font-script: var(--font-pinyon), cursive;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Ochi "rolling text": two stacked copies, hover slides the second into view. */
+.roll {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 1.2em;
+  height: 1.2em; /* exactly one line visible; the copy waits below */
+}
+.roll > span {
+  display: block;
+  transition: transform 450ms var(--ease-out);
+}
+.roll > span::after {
+  content: attr(data-text);
+  display: block;
+}
+@media (hover: hover) and (pointer: fine) {
+  a:hover .roll > span,
+  button:hover .roll > span {
+    transform: translateY(-50%);
+  }
+}
+
+/* Infinite marquee track (CSS runs off the main thread). */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Native <details> accordion that animates its height. */
+details.accordion {
+  interpolate-size: allow-keywords;
+}
+details.accordion::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 400ms var(--ease-out),
+    content-visibility 400ms allow-discrete;
+}
+details.accordion[open]::details-content {
+  block-size: auto;
+}
+details.accordion summary {
+  list-style: none;
+}
+details.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Native <dialog> enter/exit with @starting-style — no JS animation needed. */
+dialog.modal {
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  transition:
+    opacity 300ms var(--ease-out),
+    transform 300ms var(--ease-out),
+    overlay 300ms allow-discrete,
+    display 300ms allow-discrete;
+}
+dialog.modal[open] {
+  opacity: 1;
+  transform: none;
+}
+@starting-style {
+  dialog.modal[open] {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+}
+dialog.modal::backdrop {
+  background: rgb(33 33 33 / 0);
+  backdrop-filter: blur(0);
+  transition:
+    background 300ms,
+    backdrop-filter 300ms,
+    overlay 300ms allow-discrete,
+    display 300ms allow-discrete;
+}
+dialog.modal[open]::backdrop {
+  background: rgb(33 33 33 / 0.6);
+  backdrop-filter: blur(6px);
+}
+@starting-style {
+  dialog.modal[open]::backdrop {
+    background: rgb(33 33 33 / 0);
+    backdrop-filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation-play-state: paused;
+  }
+  dialog.modal,
+  dialog.modal[open] {
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }

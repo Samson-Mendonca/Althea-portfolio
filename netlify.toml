@@ -1,0 +1,5 @@
+# Overrides the old Lovable/Vite settings ("dist") still saved in the Netlify UI.
+# Netlify's Next.js adapter (OpenNext) is applied automatically.
+[build]
+  command = "npm run build"
+  publish = ".next"

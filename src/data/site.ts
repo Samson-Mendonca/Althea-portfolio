@@ -1,0 +1,196 @@
+// Single source of truth for every word, number and link on the site.
+// Components only read from here — edit copy in this file, not in JSX.
+
+export type Video = { title: string; kind: "mp4" | "youtube"; url: string };
+
+export const site = {
+  name: { first: "Althea", last: "Carvalho" },
+  role: "Social Media Manager & Marketing Strategist",
+  tagline:
+    "Full-funnel social strategy, organic content and email marketing for fashion & lifestyle brands — real stories, real growth.",
+  email: "hello@altheacarvalhomarketing.com",
+  phone: { display: "+1 (647) 865-0163", href: "tel:+16478650163" },
+  location: "Toronto, Canada",
+  // Drop a photo in /public and set e.g. "/althea.jpg" to replace the placeholder.
+  portrait: null as string | null,
+
+  nav: [
+    { label: "About", href: "#about" },
+    { label: "Portfolio", href: "#portfolio" },
+    { label: "Results", href: "#results" },
+    { label: "Skills", href: "#skills" },
+    { label: "Pricing", href: "#pricing" },
+    { label: "Contact", href: "#contact" },
+  ],
+
+  marquee: ["Organic Social", "Paid Media", "Email", "Events"],
+
+  about: {
+    statement:
+      "I’m a Toronto-based social media marketer who’s worked across agencies, brands, and creators in fashion, lifestyle, and entertainment.",
+    paragraphs: [
+      "With 5+ years of experience, I bring together creative storytelling, cultural insight, and data-driven strategy to build campaigns that connect with audiences and drive results.",
+      "From organic content to full-funnel paid campaigns, my work has delivered 8x+ ROAS — balancing the art of making people stop scrolling with the science of making marketing work.",
+    ],
+    services: ["Organic Socials", "Paid Media / Ads", "Email Marketing", "Event Marketing"],
+  },
+
+  portfolio: [
+    {
+      id: "organic",
+      name: "Organic Social",
+      blurb: "Campaigns, reels and trend-led content built to stop the scroll.",
+      tags: ["Reels", "Trends", "Community"],
+      videos: [
+        { title: "Organic video 1", kind: "mp4", url: "" },
+        { title: "Organic video 2", kind: "mp4", url: "" },
+      ] as Video[],
+    },
+    {
+      id: "paid",
+      name: "Paid Media / Ads",
+      blurb: "Full-funnel ad creative designed for performance.",
+      tags: ["Meta Ads", "Full-funnel", "ROAS"],
+      videos: [
+        { title: "Ad video 1", kind: "mp4", url: "" },
+        { title: "Ad video 2", kind: "mp4", url: "" },
+      ] as Video[],
+    },
+    {
+      id: "email",
+      name: "Email Marketing",
+      blurb: "Newsletters and flows that turn followers into customers.",
+      tags: ["Klaviyo", "Flows", "Newsletters"],
+      videos: [{ title: "Email walkthrough", kind: "mp4", url: "" }] as Video[],
+    },
+    {
+      id: "event",
+      name: "Event Marketing",
+      blurb: "Launches and activations captured from start to finish.",
+      tags: ["Launches", "Activations", "Recaps"],
+      videos: [{ title: "Event recap", kind: "mp4", url: "" }] as Video[],
+    },
+  ],
+
+  stats: [
+    { value: 5.2, decimals: 1, suffix: "M", label: "Accounts reached" },
+    { value: 6.6, decimals: 1, suffix: "M", label: "Impressions (+480%)" },
+    { value: 1.39, decimals: 2, suffix: "M", label: "Content views" },
+    { value: 27, decimals: 0, suffix: "×", label: "Peak ROAS" },
+  ],
+
+  metrics: [
+    {
+      title: "Reach — Feb 1–29",
+      rows: [
+        ["Accounts reached", "963,749"],
+        ["Impressions", "1,231,778 (+233%)"],
+      ],
+    },
+    {
+      title: "Content — all content, 90 days",
+      rows: [
+        ["Views", "1,391,128"],
+        ["Net followers", "+279"],
+        ["Interactions", "3,256"],
+      ],
+    },
+    {
+      title: "Reach — Mar 1–23",
+      rows: [
+        ["Accounts reached", "5,255,147"],
+        ["Impressions", "6,602,855 (+480%)"],
+      ],
+    },
+    {
+      title: "Audience — 90 days",
+      rows: [
+        ["Followers / Non-followers", "3.2% / 96.8%"],
+        ["Follows / Unfollows", "+485 / −206"],
+      ],
+    },
+  ],
+
+  roas: [
+    { campaign: "New Arrivals", value: 27.18 },
+    { campaign: "BABBA NAPOLI", value: 25.56 },
+    { campaign: "Sales ad — WK1", value: 10.97 },
+    { campaign: "Summer travel video", value: 6.72 },
+    { campaign: "Post: Our Summer Sale", value: 3.94 },
+    { campaign: "New Leads ad", value: 2.43 },
+  ],
+
+  tools: ["Meta", "Klaviyo", "Pinterest", "TikTok", "Canva", "Shopify", "Asana", "CapCut", "HubSpot", "Google Ads"],
+
+  certifications: [
+    { title: "Sales: Closing Strategies", body: "Negotiation strategies that focus on human psychology." },
+    {
+      title: "Marketing Analytics: Setting & Measuring KPIs",
+      body: "Establishing realistic, measurable KPIs that align with overall business goals.",
+    },
+    {
+      title: "Advertising on Instagram",
+      body: "Best practices for ad design, ad ranking systems, and strategies to increase ROI.",
+    },
+    {
+      title: "Email & Newsletter Marketing Foundations",
+      body: "Identifying marketing objectives, writing effective email copy, and designing for maximal impact.",
+    },
+    {
+      title: "Business Analytics: Marketing Data",
+      body: "Transforming marketing data into strategy by understanding its concepts, types, and use.",
+    },
+  ],
+
+  pricing: [
+    {
+      name: "Starter Growth",
+      price: "$700",
+      featured: false,
+      features: [
+        "12 custom content pieces",
+        "Instagram & TikTok distribution",
+        "Captions & scheduling",
+        "Monthly performance report",
+        "Boosts billed separately",
+        "2 newsletters",
+      ],
+    },
+    {
+      name: "Business Builder",
+      price: "$975",
+      featured: true,
+      features: [
+        "20 custom content pieces",
+        "3 social media platforms",
+        "Monthly performance report",
+        "30-min monthly strategy call",
+        "Paid media billed separately",
+        "4 newsletters",
+      ],
+    },
+    {
+      name: "Value Elite Authority",
+      price: "$1,200",
+      featured: false,
+      features: [
+        "30–40 custom content pieces",
+        "4 social media platforms",
+        "Bi-weekly performance reporting",
+        "Monthly strategy & growth call",
+        "Boosts & paid media billed separately",
+        "8 newsletters",
+      ],
+    },
+  ],
+  pricingNote:
+    "Custom packages can be designed based on budget & your business priorities. Send a project inquiry and I'll put one together.",
+
+  inquiry: {
+    intro:
+      "Tell me about your brand, what you're hoping to build, and the budget you're working with. I read every note myself and come back with ideas and a package that fits.",
+    needs: ["Organic Social", "Paid Ads", "Email Marketing", "Content & UGC", "Campaign Graphics", "Event Marketing"],
+    budgets: ["Under $700", "$700 – $975", "$975 – $1,200", "$1,200+", "Not sure yet"],
+    timelines: ["No preference", "As soon as possible", "In the next 1–3 months", "Just exploring for now"],
+  },
+};
