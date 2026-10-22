@@ -495,3 +495,50 @@ Each change was checked with `tsc --noEmit`, `npm run lint`, `npm run build`, an
 3. Turn reduced-motion support back on, but tiered: keep fades, drop the tilt and parallax. Hint: `MotionConfig reducedMotion="user"` and skip Lenis when `matchMedia` reports `reduce`.
 4. Replace the portrait placeholder with a real image through `next/image` (set `site.portrait`). Then check in the Network tab that Next serves a resized AVIF/WebP.
 5. Write a `useTilt()` custom hook that pulls the tilt logic out of `Hero.tsx`, then reuse it on the pricing cards.
+
+---
+
+## Step 22: Iteration 2, feedback-driven changes
+
+Some earlier steps are superseded here: the fonts in Step 4, the overlap and footer reveal in Step 15, and the preloader copy in Step 8.
+
+### a) Run the intro once per session, with no flash
+
+Hiding the loader from React (`useEffect` → `setDone(true)`) would paint it for a frame first, because effects run *after* paint. The fix is a tiny **inline script in `<head>`** (`layout.tsx`) that runs before first paint:
+
+```js
+if (sessionStorage.getItem("intro-seen")) document.documentElement.dataset.introSeen = "";
+```
+
+```css
+html[data-intro-seen] .preloader { display: none; }
+```
+
+`<html suppressHydrationWarning>` tells React the attribute was added on purpose before hydration. The Preloader sets the flag when the intro finishes, and `heroDelay()` lets the hero skip its 2.4s wait on repeat visits. Lesson: **anything that must be right on the first paint belongs in CSS or an inline script, not an effect.**
+
+### b) A shared `Section` component (`ui.tsx`)
+
+Every section had copied the same layout classes. Now one component owns the card look (`mx-2.5 mt-2.5 rounded-[1.75rem] overflow-hidden`), the scale-in on scroll (`useScroll` → `scale 0.94 → 1`) and the snap marker (`data-snap`). The sections only pass a colour. This is a good moment to extract: once **three or more call sites repeat** a pattern, not before.
+
+Server components still work inside it. `Toolbox.tsx` has no `"use client"` and renders `<Section>` (a client component), passing server-rendered children through.
+
+### c) Section snapping with Lenis
+
+CSS `scroll-snap-type` fights Lenis, because both try to own the scroll position. So the official add-on is used instead:
+
+```ts
+const snap = new Snap(lenis, { type: "proximity", distanceThreshold: "30%" });
+snap.addElements([...document.querySelectorAll("[data-snap]")], { align: ["start"], ignoreTransform: true });
+```
+
+- `proximity` (not `mandatory`) means long sections like Pricing still scroll freely. It only snaps when you stop near a section's top.
+- `ignoreTransform` makes snap measure the real position, not the temporarily scaled one.
+- This runs in the **parent's** effect, which runs after every child has mounted, so all `[data-snap]` elements already exist.
+
+### d) Theme-agnostic primitives
+
+`SectionTitle` and `PillLink` used to hard-code ink-on-paper colours. Now they use `currentColor` (`bg-current`, `opacity-70`, `border-current`), so the same component works on ink, forest and lime cards. **Let components inherit colour; let sections decide it.**
+
+### e) Fonts
+
+Ochi's fonts (Founders Grotesk and PP Neue Montreal) need paid licences. Antonio and Hanken Grotesk are free and close. When fonts change, re-measure anything sized by font metrics: the one-line hero name went from a 7.4em to a 7.05em divisor. If Althea buys the real fonts, load them with `next/font/local` and point `--font-display` / `--font-sans` at them. Nothing else changes.
