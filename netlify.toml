@@ -1,5 +1,9 @@
-# Overrides the old Lovable/Vite settings ("dist") still saved in the Netlify UI.
+# Overrides any old Lovable/Vite settings ("dist") still saved in the Netlify UI.
 # Netlify's Next.js adapter (OpenNext) is applied automatically.
 [build]
   command = "npm run build"
   publish = ".next"
+
+# Next.js 16 needs Node 20.9+. Pin an LTS so Netlify builds match local builds.
+[build.environment]
+  NODE_VERSION = "22"
