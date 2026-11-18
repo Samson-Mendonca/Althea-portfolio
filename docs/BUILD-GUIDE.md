@@ -428,16 +428,17 @@ General rule: **one owner per CSS property per element.**
 
 ---
 
-## Step 19 — Inquiry form (`Inquiry.tsx`): uncontrolled forms and Netlify
+## Step 19 — Inquiry form (`Inquiry.tsx`): uncontrolled forms and EmailJS
 
 ```tsx
 async function onSubmit(e) {
   e.preventDefault();
   const data = new FormData(e.currentTarget);
   if (data.getAll("needs").length === 0) return setError("Pick at least one thing you need.");
-  await fetch("/__forms.html", { method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams(data as any).toString() });
+  await fetch("https://api.emailjs.com/api/v1.0/email/send", { method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ service_id, template_id, user_id: publicKey,
+      template_params: { name: data.get("name"), needs: data.getAll("needs").join(", "), /* … */ } }) });
 }
 ```
 
@@ -445,7 +446,7 @@ async function onSubmit(e) {
 - **Native validation first.** `required` and `type="email"` cost nothing. JS only checks what HTML can't ("at least one checkbox").
 - **Chips are real inputs.** `<input type="checkbox" className="peer sr-only">` plus a styled `<span>` using `peer-checked:` / `peer-focus-visible:`. Keyboard, screen readers and `FormData` all just work.
 - **Every label has `htmlFor`, and every group is a `<fieldset>` with a `<legend>`.**
-- **Netlify Forms with Next.js:** Netlify detects forms in *static HTML* at deploy time, and a React-rendered form isn't static. So `public/__forms.html` declares a hidden copy with the same field names, and the React form POSTs to that file. The honeypot field `bot-field` filters spam.
+- **EmailJS over its REST API:** one `fetch`, no SDK. The template's `{{variables}}` match the `template_params` keys, and empty fields are sent as "—". The public key is designed for browser code; lock it to the site's domain in EmailJS → Account → Security. The honeypot field `bot-field` is checked client-side: if a bot fills it, the form shows success without sending.
 
 ---
 

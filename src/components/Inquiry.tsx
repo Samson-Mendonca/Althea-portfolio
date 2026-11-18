@@ -37,13 +37,34 @@ export default function Inquiry() {
       return;
     }
     setError("");
+    // Honeypot filled → a bot. Show success without sending anything.
+    if (data.get("bot-field")) {
+      setStatus("sent");
+      return;
+    }
     setStatus("sending");
+    const field = (k: string) => String(data.get(k) ?? "").trim() || "—";
     try {
-      // Netlify Forms: POST url-encoded data to the static form file it detected at build time.
-      const res = await fetch("/__forms.html", {
+      // EmailJS REST API: the template's {{variables}} match these keys.
+      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: site.emailjs.serviceId,
+          template_id: site.emailjs.templateId,
+          user_id: site.emailjs.publicKey,
+          template_params: {
+            name: field("name"),
+            brand: field("brand"),
+            email: field("email"),
+            phone: field("phone"),
+            website: field("website"),
+            needs: data.getAll("needs").join(", "),
+            goals: field("goals"),
+            budget: field("budget"),
+            timeline: field("timeline"),
+          },
+        }),
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus("sent");
@@ -81,8 +102,7 @@ export default function Inquiry() {
           </div>
         ) : (
           <form name="inquiry" onSubmit={onSubmit} className="grid gap-6 rounded-3xl bg-paper/70 p-6 md:grid-cols-2 md:p-10">
-            <input type="hidden" name="form-name" value="inquiry" />
-            {/* Honeypot: hidden from people, bots fill it, Netlify drops those submissions */}
+            {/* Honeypot: hidden from people; bots fill it and their submission is skipped */}
             <p className="hidden">
               <label>
                 Leave this field empty <input name="bot-field" tabIndex={-1} autoComplete="off" />

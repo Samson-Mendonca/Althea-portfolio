@@ -15,6 +15,8 @@ export const site = {
   tagline:
     "Full-funnel social strategy, organic content and email marketing for fashion & lifestyle brands — real stories, real growth.",
   email: "hello@altheacarvalhomarketing.com",
+  // EmailJS sends inquiry-form submissions to `email`. The public key is meant for browser code.
+  emailjs: { serviceId: "service_6doq2en", templateId: "template_v4wxxmo", publicKey: "yDWyRdfdqZKf0z0Vm" },
   phone: { display: "+1 (647) 865-0163", href: "tel:+16478650163" },
   location: "Toronto, Canada",
   // Hero portrait in /public; null shows the gradient placeholder instead.

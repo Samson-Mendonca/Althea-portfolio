@@ -26,7 +26,7 @@ npm start
 
 Open http://localhost:3000 and check the intro, the hero, the portfolio galleries (play a video) and the mobile layout. Stop it with `Ctrl+C`.
 
-> The inquiry form shows its error message locally. That's expected: it only works on Netlify (step 5).
+> The inquiry form sends real emails through EmailJS, even locally. Only submit it when you mean to test it.
 
 ---
 
@@ -87,19 +87,14 @@ Open `https://althea-carvalho.netlify.app` (your chosen name) on a laptop **and*
 
 ---
 
-## 5. Turn on the inquiry form and its emails
+## 5. Check the inquiry form emails
 
-1. In the new site, go to **Project configuration → Forms** (sometimes **Site configuration → Forms**) and click **Enable form detection**.
-2. Go to **Deploys → Trigger deploy → Deploy project**. Forms are detected during a build, so this rebuild is required.
-3. Open **Forms**. A form named **`inquiry`** should now be listed.
-4. Go to **Forms → Form notifications → Add notification → Email notification**:
-   - Event: **New form submission**
-   - Email: `hello@altheacarvalhomarketing.com`
-   - Form: **inquiry**
-   - Save.
-5. **Test it:** on the `.netlify.app` site, fill in the form with every field, tick 2+ needs, pick a budget, and send.
+The form sends through EmailJS (IDs in `src/data/site.ts → emailjs`) using the template `template_v4wxxmo`, which delivers to `hello@altheacarvalhomarketing.com`. Nothing to set up in Netlify.
+
+1. In the EmailJS dashboard, **Account → Security**: add the live domain(s) to the allowed origins so the key can't be used elsewhere.
+2. **Test it:** on the `.netlify.app` site, fill in the form with every field, tick 2+ needs, pick a budget, and send.
    - [ ] The "Thank you / Inquiry sent" panel appears
-   - [ ] The submission shows under **Forms → inquiry** with all fields
+   - [ ] The send shows under **Email History** in EmailJS
    - [ ] The email arrives. Check spam the first time, then mark the sender "Not spam".
    - [ ] Replying to that email addresses the person who filled in the form
 
@@ -128,4 +123,4 @@ Only do this once steps 4 and 5 all pass. Expect a few minutes of possible downt
 - **Deploy previews:** push to a branch other than `main` (`git push origin my-branch`) or open a pull request. Netlify builds a private preview URL without touching the live site.
 - **Rollback a bad deploy:** **Deploys** → click an earlier deploy → **Publish deploy**.
 - **Old site:** once the new one has run fine for a week or two, delete the old Netlify site (**Project configuration → Danger zone**).
-- **Watch:** check **Forms → Spam submissions** now and then, and the monthly **form submission and bandwidth** usage on Althea's plan.
+- **Watch:** check the monthly email quota in EmailJS (**Account → Usage**) and the bandwidth usage on Althea's Netlify plan.
