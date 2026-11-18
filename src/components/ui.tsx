@@ -1,13 +1,12 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "motion/react";
+import { motion, useInView } from "motion/react";
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
-// Every page section is a rounded card with a small gap around it (the dark page
-// background shows through). As a card scrolls in it grows from 94% to full size,
-// and `data-snap` registers it with the Lenis snap in Providers.
+// Every page section is a full-bleed panel stacked edge to edge.
+// `data-snap` registers it with the Lenis snap in Providers.
 export function Section({
   id,
   label,
@@ -19,20 +18,10 @@ export function Section({
   className?: string;
   children: React.ReactNode;
 }) {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 0.55"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
   return (
-    <motion.section
-      ref={ref}
-      id={id}
-      aria-label={label}
-      data-snap
-      style={{ scale }}
-      className={`relative mx-2.5 mt-2.5 origin-top overflow-hidden rounded-[1.75rem] ${className}`}
-    >
+    <section id={id} aria-label={label} data-snap className={`relative overflow-hidden ${className}`}>
       {children}
-    </motion.section>
+    </section>
   );
 }
 
@@ -69,7 +58,7 @@ export function Reveal({
 export function SectionTitle({ kicker, title }: { kicker: string; title: string }) {
   return (
     <h2>
-      <span className="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] opacity-70">
+      <span className="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] opacity-80">
         <span className="size-2 rounded-full bg-current" />
         {kicker}
       </span>

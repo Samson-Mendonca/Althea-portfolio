@@ -21,15 +21,15 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className={`fixed inset-x-2.5 top-2.5 z-50 rounded-2xl transition-colors duration-300 ${open ? "text-ink" : "text-paper"} ${
-          scrolled && !open ? "bg-ink/75 backdrop-blur-md" : ""
+        className={`fixed inset-x-2.5 top-2.5 z-50 rounded-2xl transition-colors duration-300 text-ink ${
+          scrolled && !open ? "bg-paper/80 backdrop-blur-md" : ""
         }`}
         animate={{ y: hidden && !open ? "-130%" : "0%" }}
         transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
       >
         <nav className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 md:h-20 md:px-10">
           <a href="#top" className="font-display text-xl font-semibold uppercase tracking-wide" onClick={() => setOpen(false)}>
-            {site.name.first} <span className="text-lime">{site.name.last}</span>
+            {site.name.first} <span>{site.name.last}</span>
           </a>
 
           <ul className="hidden items-center gap-8 text-[15px] lg:flex">

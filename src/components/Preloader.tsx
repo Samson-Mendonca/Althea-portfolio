@@ -19,10 +19,10 @@ export function heroDelay() {
   return introSeen() ? 0.15 : INTRO_SECONDS - 0.35;
 }
 
-// Hero card geometry (Section: 0.625rem gap, 1.75rem radius) — the loader card ends
+// Hero geometry (full-bleed, square corners) — the loader card ends
 // exactly there, so it hands over to the hero without a visible jump.
-const GAP = 10;
-const RADIUS = 28;
+const GAP = 0;
+const RADIUS = 0;
 
 // Ochi's loader: a grey card inside a dark frame changes colour while the counter
 // runs, then grows to become the hero card.
@@ -41,7 +41,7 @@ export default function Preloader() {
   );
   const bottom = useTransform(p, [1, 2], [0, GAP]);
   const radius = useTransform(p, [0, 1, 2], [16, 16, RADIUS]);
-  const background = useTransform(p, [0, 1], ["#4b4b4b", "#004d43"]);
+  const background = useTransform(p, [0, 1], ["#b8b8ff", "#9381ff"]);
   const contentOpacity = useTransform(p, [1.15, 1.6], [1, 0]);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ export default function Preloader() {
           transition={{ duration: 0.35 }}
         >
           <motion.div
-            className="absolute overflow-hidden text-paper"
+            className="absolute overflow-hidden text-ink"
             style={{ top, left: side, right: side, bottom, borderRadius: radius, background }}
           >
             <motion.div className="flex h-full flex-col justify-between p-5 md:p-8" style={{ opacity: contentOpacity }}>
@@ -90,7 +90,7 @@ export default function Preloader() {
                 <br />
                 brand’s socials
                 <br />
-                <span className="text-lime">& marketing</span>
+                <span className="text-ink/70">& marketing</span>
               </p>
               <div className="flex items-end justify-between gap-6">
                 <span className="max-w-[16rem] text-sm leading-snug opacity-80">

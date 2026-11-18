@@ -53,7 +53,7 @@ export default function Eyes() {
       <motion.p
         aria-hidden
         style={{ y: headlineY }}
-        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[clamp(4.5rem,19vw,20rem)] font-bold uppercase leading-[0.82] text-lime"
+        className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none text-center font-display text-[clamp(4.5rem,19vw,20rem)] font-bold uppercase leading-[0.82] text-paper"
       >
         Stop the
         <br />
@@ -63,7 +63,7 @@ export default function Eyes() {
         <Eye rotate={rotate} />
         <Eye rotate={rotate} />
       </div>
-      <p className="absolute bottom-8 left-1/2 w-max max-w-[90vw] -translate-x-1/2 text-center text-sm uppercase tracking-[0.2em] text-paper/70">
+      <p className="absolute bottom-8 left-1/2 w-max max-w-[90vw] -translate-x-1/2 text-center text-sm uppercase tracking-[0.2em] text-ink">
         Content people can’t look away from
       </p>
     </div>

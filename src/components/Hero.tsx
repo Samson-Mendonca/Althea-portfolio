@@ -12,19 +12,10 @@ const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;
 
 // Placeholder texture in Ochi's greens until a real photo is set in site.portrait.
 const texture =
-  "radial-gradient(circle at 30% 25%, #cdea68 0 14%, transparent 42%), radial-gradient(circle at 75% 75%, #2f7a6d 0 18%, transparent 48%), linear-gradient(160deg, #004d43, #002a25)";
+  "radial-gradient(circle at 30% 25%, #ffd8be 0 14%, transparent 42%), radial-gradient(circle at 75% 75%, #ffeedd 0 18%, transparent 48%), linear-gradient(160deg, #b8b8ff, #9381ff)";
 
-export default function Hero() {
-  const t = heroDelay(); // after the intro card on first load, almost immediately afterwards
-  const ref = useRef<HTMLDivElement>(null);
-
-  // Scroll parallax: the hero drifts down at half speed, so the next section
-  // (rounded top, higher z-index) slides up over it — Ochi's overlap effect.
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
-
-  // Hover tilt: pointer position over the name → rotateX/Y, smoothed by springs.
+// Hover tilt: pointer position over an element → rotateX/Y, smoothed by springs.
+function useTilt() {
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const rotateX = useSpring(rx, { stiffness: 150, damping: 15 });
@@ -41,9 +32,24 @@ export default function Hero() {
     rx.set(0);
     ry.set(0);
   }
+  return { rotateX, rotateY, onPointerMove, onPointerLeave };
+}
+
+export default function Hero() {
+  const t = heroDelay(); // after the intro card on first load, almost immediately afterwards
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Scroll parallax: the hero drifts down at half speed, so the next section
+  // (rounded top, higher z-index) slides up over it — Ochi's overlap effect.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "45%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+
+  const nameTilt = useTilt();
+  const cardTilt = useTilt();
 
   return (
-    <Section id="top" className="mt-2.5 bg-forest text-paper">
+    <Section id="top" className="bg-forest text-ink">
       <div ref={ref}>
       <motion.div
         style={{ y, scale }}
@@ -58,13 +64,22 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: EASE_OUT, delay: t + 0.3 }}
           >
             <p className="text-base font-medium uppercase leading-snug tracking-[0.12em] md:text-2xl">{site.role}</p>
-            <p className="mt-1 text-sm uppercase tracking-[0.12em] opacity-70 md:text-lg">Based in {site.location}</p>
+            <p className="mt-1 text-sm uppercase tracking-[0.12em] md:text-lg">Based in {site.location}</p>
           </motion.div>
 
-          {/* Portrait, top right — wipes up into view */}
+          {/* Portrait, top right — wipes up into view, tilts on hover like the name */}
+          <div
+            className="shrink-0 [perspective:900px]"
+            onPointerMove={cardTilt.onPointerMove}
+            onPointerLeave={cardTilt.onPointerLeave}
+          >
           <motion.div
-            className="relative aspect-[4/5] w-[min(34vw,26svh)] shrink-0 overflow-hidden rounded-xl md:w-[min(22vw,36svh)] md:rounded-2xl"
-            style={site.portrait ? undefined : { background: texture }}
+            className="relative aspect-[4/5] w-[min(34vw,26svh)] overflow-hidden rounded-xl will-change-transform md:w-[min(22vw,36svh)] md:rounded-2xl"
+            style={{
+              rotateX: cardTilt.rotateX,
+              rotateY: cardTilt.rotateY,
+              ...(site.portrait ? {} : { background: texture }),
+            }}
             initial={{ clipPath: "inset(100% 0 0 0)" }}
             animate={{ clipPath: "inset(0% 0 0 0)" }}
             transition={{ duration: 1.2, ease: EASE_IN_OUT, delay: t + 0.15 }}
@@ -76,26 +91,27 @@ export default function Hero() {
                 fill
                 priority
                 sizes="(min-width: 768px) 22vw, 34vw"
-                className="object-cover"
+                className="object-cover object-[50%_20%]"
               />
             ) : (
-              <span className="absolute inset-0 grid place-items-center font-display text-6xl font-semibold text-lime md:text-9xl">
+              <span className="absolute inset-0 grid place-items-center font-display text-6xl font-semibold text-ink md:text-9xl">
                 AC
               </span>
             )}
           </motion.div>
+          </div>
         </div>
 
         {/* Name on ONE line. Antonio Bold measures ≈6.1em for "ALTHEA CARVALHO",
             so font-size = (viewport − card gaps − padding − scrollbar) ÷ 6.3, capped on wide screens. */}
         <h1
-          onPointerMove={onPointerMove}
-          onPointerLeave={onPointerLeave}
+          onPointerMove={nameTilt.onPointerMove}
+          onPointerLeave={nameTilt.onPointerLeave}
           className="mb-8 mt-1 font-display font-bold text-[min(calc((100vw_-_4rem)/6.3),15rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_7rem)/6.3),15rem)]"
         >
           <motion.span
             className="block whitespace-nowrap will-change-transform"
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            style={{ rotateX: nameTilt.rotateX, rotateY: nameTilt.rotateY, transformStyle: "preserve-3d" }}
           >
             <span className="block overflow-hidden pb-[0.04em]">
               <motion.span
@@ -112,7 +128,7 @@ export default function Hero() {
         </h1>
 
         <motion.div
-          className="mb-6 grid gap-6 border-t border-paper/20 pt-5 md:mb-10 md:grid-cols-[1fr_auto] md:items-center"
+          className="mb-6 grid gap-6 border-t border-ink/20 pt-5 md:mb-10 md:grid-cols-[1fr_auto] md:items-center"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE_OUT, delay: t + 0.45 }}

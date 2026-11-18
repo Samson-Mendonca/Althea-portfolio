@@ -114,7 +114,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
       transition={{ duration: 0.9, ease: EASE_OUT, delay: (index % 2) * 0.1 }}
     >
       <div className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
-        <span className="size-2.5 rounded-full bg-lime" />
+        <span className="size-2.5 rounded-full bg-forest" />
         {String(index + 1).padStart(2, "0")} — {service.name}
       </div>
 
@@ -142,7 +142,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
             className="object-cover"
           />
         </motion.span>
-        {/* Darkens the cover on hover so the lime title stays readable on any photo */}
+        {/* Darkens the cover on hover so the light title stays readable on any photo */}
         <motion.span
           aria-hidden
           className="absolute inset-0 bg-ink/55"
@@ -159,7 +159,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
           aria-hidden
           className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center overflow-hidden px-4"
         >
-          <span className="flex flex-wrap justify-center font-display text-[clamp(2.75rem,5vw,6rem)] font-bold uppercase leading-none text-lime">
+          <span className="flex flex-wrap justify-center font-display text-[clamp(2.75rem,5vw,6rem)] font-bold uppercase leading-none text-paper">
             {[...service.name].map((ch, i) => (
               <span key={i} className="overflow-hidden">
                 <motion.span
@@ -178,7 +178,7 @@ function Card({ service, index, onOpen }: { service: Service; index: number; onO
       <p className="mt-4 max-w-md text-lg opacity-80">{service.blurb}</p>
       <ul className="mt-3 flex flex-wrap gap-2">
         {service.tags.map((t) => (
-          <li key={t} className="rounded-full border border-paper/30 px-3 py-1 text-xs uppercase tracking-wide">
+          <li key={t} className="rounded-full border border-ink/30 px-3 py-1 text-xs uppercase tracking-wide">
             {t}
           </li>
         ))}
@@ -191,9 +191,9 @@ export default function Portfolio() {
   const [active, setActive] = useState<Service | null>(null);
 
   return (
-    <Section id="portfolio" className="bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
+    <Section id="portfolio" className="bg-paper px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
-        <div className="border-b border-paper/20 pb-6">
+        <div className="border-b border-ink/20 pb-6">
           <SectionTitle kicker="Selected work" title="Portfolio" />
           <p className="mt-4 max-w-lg text-lg opacity-80 md:text-xl">
             A selection of work for brands across fashion & lifestyle. Tap a service to see examples.

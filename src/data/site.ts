@@ -17,8 +17,8 @@ export const site = {
   email: "hello@altheacarvalhomarketing.com",
   phone: { display: "+1 (647) 865-0163", href: "tel:+16478650163" },
   location: "Toronto, Canada",
-  // Drop a photo in /public and set e.g. "/althea.jpg" to replace the placeholder.
-  portrait: null as string | null,
+  // Hero portrait in /public; null shows the gradient placeholder instead.
+  portrait: "/althea.jpg" as string | null,
 
   nav: [
     { label: "About", href: "#about" },

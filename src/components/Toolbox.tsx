@@ -28,18 +28,18 @@ export default function Toolbox() {
       </div>
 
       <div className="mx-auto mt-16 max-w-[1600px] px-4 md:px-10">
-        <h3 className="text-sm uppercase tracking-widest opacity-70">Certifications</h3>
+        <h3 className="text-sm uppercase tracking-widest opacity-80">Certifications</h3>
         <div className="mt-4 border-t border-ink/20">
           {site.certifications.map((c, i) => (
             <details key={c.title} className="accordion group border-b border-ink/20">
               <summary className="flex cursor-pointer items-center gap-4 py-6 md:gap-10">
-                <span className="w-8 text-sm opacity-70">0{i + 1}</span>
+                <span className="w-8 text-sm opacity-80">0{i + 1}</span>
                 <span className="flex-1 text-xl md:text-3xl">{c.title}</span>
                 <span className="grid size-10 shrink-0 place-items-center rounded-full border border-ink text-xl transition-transform duration-300 group-open:rotate-45">
                   +
                 </span>
               </summary>
-              <p className="pb-6 pl-12 text-lg opacity-70 md:pl-[4.5rem] md:text-xl">{c.body}</p>
+              <p className="pb-6 pl-12 text-lg opacity-80 md:pl-[4.5rem] md:text-xl">{c.body}</p>
             </details>
           ))}
         </div>

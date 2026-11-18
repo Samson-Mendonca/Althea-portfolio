@@ -7,7 +7,7 @@ import { Section, SectionTitle } from "./ui";
 type Status = "idle" | "sending" | "sent" | "error";
 
 const input =
-  "w-full rounded-xl border border-paper/25 bg-paper/[0.07] px-4 py-3 text-paper outline-none transition-colors focus:border-lime [&>option]:text-ink";
+  "w-full rounded-xl border border-ink/25 bg-paper/70 px-4 py-3 text-ink outline-none transition-colors focus:border-ink [&>option]:text-ink";
 const label = "mb-2 block text-xs uppercase tracking-widest";
 
 // A checkbox/radio styled as a pill. The real input stays in the DOM (sr-only)
@@ -16,7 +16,7 @@ function Chip({ type, name, value }: { type: "checkbox" | "radio"; name: string;
   return (
     <label className="cursor-pointer">
       <input type={type} name={name} value={value} className="peer sr-only" />
-      <span className="inline-block rounded-full border border-paper/40 px-4 py-2 text-sm uppercase tracking-wide transition-colors peer-checked:border-lime peer-checked:bg-lime peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-lime">
+      <span className="inline-block rounded-full border border-ink/40 px-4 py-2 text-sm uppercase tracking-wide transition-colors peer-checked:border-ink peer-checked:bg-ink peer-checked:text-paper peer-focus-visible:outline-2 peer-focus-visible:outline-ink">
         {value}
       </span>
     </label>
@@ -53,7 +53,7 @@ export default function Inquiry() {
   }
 
   return (
-    <Section id="inquiry" className="bg-forest px-4 py-20 text-paper md:px-10 md:py-32">
+    <Section id="inquiry" className="bg-peach px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto grid max-w-[1600px] gap-12 lg:grid-cols-[1fr_1.2fr]">
         <div>
           <SectionTitle kicker="Start a project" title="Let’s talk" />
@@ -65,7 +65,7 @@ export default function Inquiry() {
           </ul>
           <p className="mt-8 text-sm uppercase tracking-wide">
             Prefer email?{" "}
-            <a href={`mailto:${site.email}`} className="text-lime underline underline-offset-4">
+            <a href={`mailto:${site.email}`} className="text-ink underline underline-offset-4">
               {site.email}
             </a>
           </p>
@@ -80,7 +80,7 @@ export default function Inquiry() {
             </div>
           </div>
         ) : (
-          <form name="inquiry" onSubmit={onSubmit} className="grid gap-6 rounded-3xl bg-ink/35 p-6 md:grid-cols-2 md:p-10">
+          <form name="inquiry" onSubmit={onSubmit} className="grid gap-6 rounded-3xl bg-paper/70 p-6 md:grid-cols-2 md:p-10">
             <input type="hidden" name="form-name" value="inquiry" />
             {/* Honeypot: hidden from people, bots fill it, Netlify drops those submissions */}
             <p className="hidden">
@@ -118,7 +118,7 @@ export default function Inquiry() {
                 ))}
               </div>
               {error && (
-                <p className="mt-2 text-sm text-lime" role="alert">
+                <p className="mt-2 text-sm font-medium text-ink" role="alert">
                   {error}
                 </p>
               )}
@@ -159,12 +159,12 @@ export default function Inquiry() {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="rounded-full bg-lime px-8 py-4 text-sm uppercase tracking-wider text-ink transition-opacity disabled:opacity-60"
+                className="rounded-full bg-ink px-8 py-4 text-sm uppercase tracking-wider text-paper transition-opacity disabled:opacity-60"
               >
                 {status === "sending" ? "Sending…" : "Send inquiry"}
               </button>
               {status === "error" && (
-                <p className="text-sm text-lime" role="alert">
+                <p className="text-sm font-medium text-ink" role="alert">
                   Something went wrong. Please email {site.email} instead.
                 </p>
               )}

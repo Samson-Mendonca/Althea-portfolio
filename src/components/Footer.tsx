@@ -3,10 +3,10 @@ import { Reveal, Roll, Section } from "./ui";
 
 export default function Footer() {
   return (
-    <Section id="contact" className="mb-2.5 bg-lime px-4 pt-20 text-ink md:px-10 md:pt-32">
+    <Section id="contact" className="bg-lime px-4 pt-20 text-ink md:px-10 md:pt-32">
       <footer>
       <div className="mx-auto max-w-[1600px]">
-        <p className="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-ink/70">
+        <p className="mb-3 flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-ink/80">
           <span className="size-2 rounded-full bg-ink" />
           Let’s create
         </p>
@@ -17,19 +17,19 @@ export default function Footer() {
 
         <div className="mt-16 grid gap-10 border-t border-ink/20 pt-10 md:grid-cols-[2fr_1fr_1fr]">
           <div>
-            <p className="text-xs uppercase tracking-widest text-ink/60">Email</p>
+            <p className="text-xs uppercase tracking-widest text-ink/80">Email</p>
             <a href={`mailto:${site.email}`} className="mt-2 block text-lg sm:text-xl lg:text-2xl">
               <Roll text={site.email} />
             </a>
           </div>
           <div>
-            <p className="text-xs uppercase tracking-widest text-ink/60">Phone</p>
+            <p className="text-xs uppercase tracking-widest text-ink/80">Phone</p>
             <a href={site.phone.href} className="mt-2 block text-xl md:text-2xl">
               <Roll text={site.phone.display} />
             </a>
           </div>
           <nav aria-label="Footer">
-            <p className="text-xs uppercase tracking-widest text-ink/60">Menu</p>
+            <p className="text-xs uppercase tracking-widest text-ink/80">Menu</p>
             <ul className="mt-2 grid grid-cols-2 gap-1">
               {site.nav.map((n) => (
                 <li key={n.href}>
@@ -49,7 +49,7 @@ export default function Footer() {
         >
           {site.name.first} {site.name.last}
         </p>
-        <p className="py-6 text-center text-xs uppercase tracking-widest text-ink/60">
+        <p className="py-6 text-center text-xs uppercase tracking-widest text-ink/80">
           © {site.name.first} {site.name.last} · {site.location}
         </p>
       </div>

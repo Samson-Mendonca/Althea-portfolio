@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 
-/* Design tokens — Ochi's palette (taken from ochi.design's computed styles). */
+/* Design tokens — "Soft Lavender" palette. forest = deep lavender, lime = light lavender (names kept from the original theme). */
 @theme inline {
-  --color-paper: #f1f1f1;
+  --color-paper: #ffeedd; /* beige */
   --color-ink: #212121;
-  --color-mist: #e7e7e7;
-  --color-forest: #004d43;
-  --color-lime: #cdea68;
-  --color-void: #0c0c0c; /* page background, visible in the gaps between section cards */
+  --color-peach: #ffd8be; /* deeper beige */
+  --color-forest: #9381ff;
+  --color-lime: #b8b8ff;
+  --color-void: #ffeedd; /* page background (same beige) */
 
   --font-display: var(--font-antonio), "Arial Narrow", sans-serif;
   --font-sans: var(--font-hanken), "Helvetica Neue", sans-serif;
@@ -19,7 +19,7 @@
 
 html {
   background: var(--color-void);
-  color: var(--color-paper);
+  color: var(--color-ink);
 }
 
 /* Intro already played in this page load → never show it again (e.g. after a dev hot reload). */
@@ -39,7 +39,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-forest);
+  outline: 2px solid currentColor;
   outline-offset: 3px;
 }
 

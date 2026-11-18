@@ -27,20 +27,20 @@ function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
   }, [inView, value, decimals]);
 
   return (
-    <div className="border-t border-paper/25 pt-4">
-      <p className="font-display text-[clamp(3.5rem,8vw,7.5rem)] font-bold leading-none text-lime">
+    <div className="border-t border-ink/25 pt-4">
+      <p className="font-display text-[clamp(3.5rem,8vw,7.5rem)] font-bold leading-none text-ink">
         {/* Server renders the final value, so no-JS and screen readers see the real number */}
         <span ref={ref}>{final}</span>
         {suffix}
       </p>
-      <p className="mt-2 text-sm uppercase tracking-widest text-paper/70">{label}</p>
+      <p className="mt-2 text-sm uppercase tracking-widest text-ink/70">{label}</p>
     </div>
   );
 }
 
 export default function Results() {
   return (
-    <Section id="results" className="bg-forest px-4 py-20 text-paper md:px-10 md:py-32">
+    <Section id="results" className="bg-peach px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionTitle kicker="Proof in numbers" title="Results" />
 
@@ -54,17 +54,17 @@ export default function Results() {
           {site.metrics.map((m, i) => (
             <motion.div
               key={m.title}
-              className="rounded-2xl bg-ink/30 p-6 md:p-8"
+              className="rounded-2xl bg-lime/30 p-6 md:p-8"
               initial={{ opacity: 0, y: "30px" }}
               whileInView={{ opacity: 1, y: "0px" }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, ease: EASE_OUT, delay: (i % 2) * 0.1 }}
             >
-              <h3 className="text-xs uppercase tracking-[0.2em] text-lime">{m.title}</h3>
-              <dl className="mt-4 divide-y divide-paper/15">
+              <h3 className="text-xs uppercase tracking-[0.2em] text-ink/70">{m.title}</h3>
+              <dl className="mt-4 divide-y divide-ink/15">
                 {m.rows.map(([k, v]) => (
                   <div key={k} className="flex items-baseline justify-between gap-4 py-3">
-                    <dt className="text-paper/70">{k}</dt>
+                    <dt className="text-ink/70">{k}</dt>
                     <dd className="font-display text-2xl tracking-wide md:text-3xl">{v}</dd>
                   </div>
                 ))}
@@ -74,22 +74,22 @@ export default function Results() {
         </div>
 
         <div className="mt-20">
-          <h3 className="text-xs uppercase tracking-[0.2em] text-lime">Return on ad spend — by campaign</h3>
+          <h3 className="text-xs uppercase tracking-[0.2em] text-ink/70">Return on ad spend — by campaign</h3>
           <ul className="mt-6 space-y-5">
             {site.roas.map((r, i) => (
               <li key={r.campaign} className="grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 md:grid-cols-[16rem_1fr_5rem]">
-                <span className="text-paper/80">{r.campaign}</span>
+                <span className="text-ink/80">{r.campaign}</span>
                 {/* The track watches the viewport (a scaleX(0) bar has no area to observe)
                     and passes "show" down to the bar through variants. */}
                 <motion.span
-                  className="order-last col-span-2 h-3 overflow-hidden rounded-full bg-paper/10 md:order-none md:col-span-1"
+                  className="order-last col-span-2 h-3 overflow-hidden rounded-full bg-ink/10 md:order-none md:col-span-1"
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true }}
                 >
                   {/* scaleX from the left edge: GPU-friendly "width" animation */}
                   <motion.span
-                    className="block h-full origin-left rounded-full bg-lime"
+                    className="block h-full origin-left rounded-full bg-forest"
                     variants={{
                       hidden: { scaleX: 0 },
                       show: { scaleX: r.value / maxRoas },

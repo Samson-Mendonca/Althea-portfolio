@@ -8,7 +8,7 @@ const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 export default function Pricing() {
   return (
-    <Section id="pricing" className="bg-ink px-4 py-20 text-paper md:px-10 md:py-32">
+    <Section id="pricing" className="bg-paper px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionTitle kicker="Packages" title="Pricing" />
 
@@ -26,12 +26,12 @@ export default function Pricing() {
             >
             <article
               className={`relative flex w-full flex-col rounded-3xl p-8 transition-transform duration-500 ease-(--ease-out) hover:-translate-y-2 md:p-10 ${
-                p.featured ? "bg-lime text-ink" : "bg-paper/[0.06]"
+                p.featured ? "bg-peach text-ink" : "bg-lime/25"
               }`}
             >
               <span
                 className={`w-max rounded-full px-3 py-1 text-xs uppercase tracking-wider ${
-                  p.featured ? "bg-ink text-lime" : "border border-paper/30"
+                  p.featured ? "bg-ink text-lime" : "border border-ink/30"
                 }`}
               >
                 {p.featured ? "Most popular" : "Package"}
@@ -41,10 +41,10 @@ export default function Pricing() {
                 <span className="font-display text-6xl font-bold">{p.price}</span>
                 <span className={"opacity-70"}> / month</span>
               </p>
-              <ul className={`mt-8 flex-1 divide-y ${p.featured ? "divide-ink/15" : "divide-paper/15"}`}>
+              <ul className={`mt-8 flex-1 divide-y ${p.featured ? "divide-ink/15" : "divide-ink/15"}`}>
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-3 py-3">
-                    <span className={p.featured ? "text-forest" : "text-lime"}>✦</span>
+                    <span className={p.featured ? "text-forest" : "text-forest"}>✦</span>
                     {f}
                   </li>
                 ))}

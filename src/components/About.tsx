@@ -15,12 +15,12 @@ export default function About() {
   return (
     <Section id="about" className="bg-lime px-4 py-20 text-ink md:px-10 md:py-28">
       <div className="mx-auto max-w-[1600px]">
-        <p className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-ink/70">
+        <p className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-ink/80">
           <span className="size-2 rounded-full bg-ink" />
           About me
         </p>
         <motion.p
-          className="mt-4 max-w-[22ch] text-[clamp(1.9rem,4.2vw,4rem)] leading-[1.08] md:max-w-[28ch]"
+          className="mt-4 max-w-[22ch] text-[clamp(1.71rem,3.78vw,3.6rem)] leading-[1.08] md:max-w-[28ch]"
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
@@ -37,9 +37,9 @@ export default function About() {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
             transition={{ staggerChildren: 0.12 }}
-            className="space-y-5 text-xl leading-relaxed md:text-2xl"
+            className="space-y-5 text-[1.125rem] leading-relaxed md:text-[1.35rem]"
           >
-            <motion.p variants={fadeUp} transition={{ duration: 0.8, ease: EASE_OUT }} className="text-sm uppercase tracking-widest text-ink/60">
+            <motion.p variants={fadeUp} transition={{ duration: 0.8, ease: EASE_OUT }} className="text-sm uppercase tracking-widest text-ink/80">
               What I bring
             </motion.p>
             {site.about.paragraphs.map((p) => (
@@ -55,15 +55,15 @@ export default function About() {
           </motion.div>
 
           <div>
-            <p className="text-sm uppercase tracking-widest text-ink/60">Services</p>
+            <p className="text-sm uppercase tracking-widest text-ink/80">Services</p>
             <ul className="mt-4">
               {site.about.services.map((s, i) => (
                 <li
                   key={s}
-                  className="flex items-baseline justify-between border-b border-ink/20 py-4 font-display text-3xl font-semibold uppercase md:text-5xl"
+                  className="flex items-baseline justify-between border-b border-ink/20 py-4 font-display text-[1.6875rem] font-semibold uppercase md:text-[2.7rem]"
                 >
                   <span>{s}</span>
-                  <span className="font-sans text-sm text-ink/60">0{i + 1}</span>
+                  <span className="font-sans text-sm text-ink/80">0{i + 1}</span>
                 </li>
               ))}
             </ul>
