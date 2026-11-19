@@ -8,7 +8,7 @@ const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
 export default function Pricing() {
   return (
-    <Section id="pricing" className="bg-paper px-4 py-20 text-ink md:px-10 md:py-32">
+    <Section id="pricing" className="bg-lime px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionTitle kicker="Packages" title="Pricing" />
 
@@ -26,7 +26,7 @@ export default function Pricing() {
             >
             <article
               className={`relative flex w-full flex-col rounded-3xl p-8 transition-transform duration-500 ease-(--ease-out) hover:-translate-y-2 md:p-10 ${
-                p.featured ? "bg-peach text-ink" : "bg-lime/25"
+                p.featured ? "bg-forest text-ink" : "bg-paper/70"
               }`}
             >
               <span
@@ -44,7 +44,7 @@ export default function Pricing() {
               <ul className={`mt-8 flex-1 divide-y ${p.featured ? "divide-ink/15" : "divide-ink/15"}`}>
                 {p.features.map((f) => (
                   <li key={f} className="flex gap-3 py-3">
-                    <span className={p.featured ? "text-forest" : "text-forest"}>✦</span>
+                    <span className={p.featured ? "text-ink" : "text-forest"}>✦</span>
                     {f}
                   </li>
                 ))}

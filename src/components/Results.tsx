@@ -40,7 +40,7 @@ function Stat({ value, decimals, suffix, label }: (typeof site.stats)[number]) {
 
 export default function Results() {
   return (
-    <Section id="results" className="bg-peach px-4 py-20 text-ink md:px-10 md:py-32">
+    <Section id="results" className="bg-lime px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto max-w-[1600px]">
         <SectionTitle kicker="Proof in numbers" title="Results" />
 
@@ -54,7 +54,7 @@ export default function Results() {
           {site.metrics.map((m, i) => (
             <motion.div
               key={m.title}
-              className="rounded-2xl bg-lime/30 p-6 md:p-8"
+              className="rounded-2xl bg-paper/70 p-6 md:p-8"
               initial={{ opacity: 0, y: "30px" }}
               whileInView={{ opacity: 1, y: "0px" }}
               viewport={{ once: true, amount: 0.3 }}

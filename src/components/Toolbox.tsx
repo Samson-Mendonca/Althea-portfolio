@@ -4,7 +4,7 @@ import { Section, SectionTitle } from "./ui";
 // No hooks or handlers here, so this stays a Server Component (zero client JS).
 export default function Toolbox() {
   return (
-    <Section id="skills" className="bg-lime py-20 text-ink md:py-32">
+    <Section id="skills" className="bg-paper py-20 text-ink md:py-32">
       <div className="mx-auto max-w-[1600px] px-4 md:px-10">
         <SectionTitle kicker="Skills & certifications" title="Toolbox" />
       </div>

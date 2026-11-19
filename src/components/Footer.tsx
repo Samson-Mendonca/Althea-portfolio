@@ -45,7 +45,7 @@ export default function Footer() {
         {/* Giant name, sized to the viewport width so it always fits on one line */}
         <p
           aria-hidden
-          className="mt-20 select-none whitespace-nowrap text-center font-display text-[13.5vw] font-bold uppercase leading-[0.8] text-ink/10 md:mt-28"
+          className="mt-20 select-none whitespace-nowrap text-center font-display text-[13.5vw] font-bold uppercase leading-[0.8] text-paper md:mt-28"
         >
           {site.name.first} {site.name.last}
         </p>

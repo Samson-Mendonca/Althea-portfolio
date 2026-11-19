@@ -38,7 +38,7 @@ export default function Marquee() {
   const words = site.marquee.flatMap((w) => [w, "•"]);
 
   return (
-    <Section label="Services" className="bg-peach py-8 text-ink md:py-14">
+    <Section label="Services" className="bg-paper py-8 text-ink md:py-14">
       <motion.div className="flex w-max whitespace-nowrap" style={{ transform }} aria-hidden>
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center">

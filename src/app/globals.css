@@ -3,12 +3,11 @@
 
 /* Design tokens — "Soft Lavender" palette. forest = deep lavender, lime = light lavender (names kept from the original theme). */
 @theme inline {
-  --color-paper: #ffeedd; /* beige */
+  --color-paper: #fefae0; /* lightest beige */
   --color-ink: #212121;
-  --color-peach: #ffd8be; /* deeper beige */
-  --color-forest: #9381ff;
-  --color-lime: #b8b8ff;
-  --color-void: #ffeedd; /* page background (same beige) */
+  --color-forest: #d4a373; /* dark beige (was loud lavender) */
+  --color-lime: #faedcd; /* mid beige (was light lavender) */
+  --color-void: #fefae0; /* page background (same beige) */
 
   --font-display: var(--font-antonio), "Arial Narrow", sans-serif;
   --font-sans: var(--font-hanken), "Helvetica Neue", sans-serif;

@@ -41,7 +41,7 @@ export default function Preloader() {
   );
   const bottom = useTransform(p, [1, 2], [0, GAP]);
   const radius = useTransform(p, [0, 1, 2], [16, 16, RADIUS]);
-  const background = useTransform(p, [0, 1], ["#b8b8ff", "#9381ff"]);
+  const background = useTransform(p, [0, 1], ["#faedcd", "#d4a373"]);
   const contentOpacity = useTransform(p, [1.15, 1.6], [1, 0]);
 
   useEffect(() => {

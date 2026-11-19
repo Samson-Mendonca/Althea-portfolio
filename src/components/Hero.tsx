@@ -10,9 +10,9 @@ import { PillLink, Section } from "./ui";
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;
 
-// Placeholder texture in Ochi's greens until a real photo is set in site.portrait.
+// Placeholder texture in the beige palette until a real photo is set in site.portrait.
 const texture =
-  "radial-gradient(circle at 30% 25%, #ffd8be 0 14%, transparent 42%), radial-gradient(circle at 75% 75%, #ffeedd 0 18%, transparent 48%), linear-gradient(160deg, #b8b8ff, #9381ff)";
+  "radial-gradient(circle at 30% 25%, #faedcd 0 14%, transparent 42%), radial-gradient(circle at 75% 75%, #fefae0 0 18%, transparent 48%), linear-gradient(160deg, #faedcd, #d4a373)";
 
 // Hover tilt: pointer position over an element → rotateX/Y, smoothed by springs.
 function useTilt() {
@@ -107,7 +107,7 @@ export default function Hero() {
         <h1
           onPointerMove={nameTilt.onPointerMove}
           onPointerLeave={nameTilt.onPointerLeave}
-          className="mb-8 mt-1 font-display font-bold text-[min(calc((100vw_-_4rem)/6.3),15rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_7rem)/6.3),15rem)]"
+          className="mb-8 mt-1 font-display font-bold text-lime text-[min(calc((100vw_-_4rem)/6.3),15rem)] uppercase leading-[0.86] tracking-tight [perspective:900px] md:text-[min(calc((100vw_-_7rem)/6.3),15rem)]"
         >
           <motion.span
             className="block whitespace-nowrap will-change-transform"

@@ -74,7 +74,7 @@ export default function Inquiry() {
   }
 
   return (
-    <Section id="inquiry" className="bg-peach px-4 py-20 text-ink md:px-10 md:py-32">
+    <Section id="inquiry" className="bg-paper px-4 py-20 text-ink md:px-10 md:py-32">
       <div className="mx-auto grid max-w-[1600px] gap-12 lg:grid-cols-[1fr_1.2fr]">
         <div>
           <SectionTitle kicker="Start a project" title="Let’s talk" />
@@ -101,7 +101,7 @@ export default function Inquiry() {
             </div>
           </div>
         ) : (
-          <form name="inquiry" onSubmit={onSubmit} className="grid gap-6 rounded-3xl bg-paper/70 p-6 md:grid-cols-2 md:p-10">
+          <form name="inquiry" onSubmit={onSubmit} className="grid gap-6 rounded-3xl bg-lime p-6 md:grid-cols-2 md:p-10">
             {/* Honeypot: hidden from people; bots fill it and their submission is skipped */}
             <p className="hidden">
               <label>
